@@ -8,6 +8,7 @@ public class AppBibliothequeApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(AppBibliothequeApplication.class, args);
+		System.err.println("http://localhost:8080/AppBibliotheque");
 	}
 
 }
