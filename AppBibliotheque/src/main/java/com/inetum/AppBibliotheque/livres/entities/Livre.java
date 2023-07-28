@@ -35,7 +35,7 @@ public class Livre {
 	private String titre;
 	private String auteur;
 	private String editeur;
-	private Integer nbExemp;
+	//private Integer nbExemp;
 
 	@ManyToOne // Many livre To one domaine
 	@JoinColumn(name = "id_domaine")
@@ -46,21 +46,21 @@ public class Livre {
 	private List<Exemplaire> exemplaires; // +get/set
 	
 	// CONSTRUSTEUR
-	public Livre(Long idLivre, String titre, String auteur, String editeur, Integer nbExemp, Domaine domaine) {
+	public Livre(Long idLivre, String titre, String auteur, String editeur, Domaine domaine) {
 		super();
 		this.idLivre = idLivre;
 		this.titre = titre;
 		this.auteur = auteur;
 		this.editeur = editeur;
-		this.nbExemp = nbExemp;
 		this.domaine = domaine;
 	}
 
-	// TOSTRING
-
 	@Override
 	public String toString() {
-		return "Livre [idLivre=" + idLivre + ", titre=" + titre + ", auteur=" + auteur + ", editeur=" + editeur + "]";
+		return "Livre [idLivre=" + idLivre + ", titre=" + titre + ", auteur=" + auteur + ", editeur=" + editeur
+				+ ", domaine=" + domaine + "]";
 	}
+
+
 
 }
