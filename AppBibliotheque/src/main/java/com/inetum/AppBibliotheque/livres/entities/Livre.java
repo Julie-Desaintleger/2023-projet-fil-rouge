@@ -15,6 +15,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,13 +38,16 @@ public class Livre {
 	private String auteur;
 	private String editeur;
 	//private Integer nbExemp;
+	
 
 	@ManyToOne // Many livre To one domaine
 	@JoinColumn(name = "id_domaine")
+	//@JsonIgnore
 	private Domaine domaine;
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "livre", cascade = CascadeType.ALL)
 	// @OneToMany(fetch = FetchType.EAGER, mappedBy = "livre")
+	@JsonIgnore
 	private List<Exemplaire> exemplaires; // +get/set
 	
 	// CONSTRUSTEUR

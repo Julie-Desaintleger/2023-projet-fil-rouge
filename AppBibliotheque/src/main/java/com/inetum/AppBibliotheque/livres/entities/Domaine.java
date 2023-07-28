@@ -13,6 +13,8 @@ import javax.persistence.InheritanceType;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -35,6 +37,7 @@ public class Domaine {
 
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "domaine", cascade = CascadeType.ALL)
 	// @OneToMany(fetch = FetchType.EAGER, mappedBy = "livre")
+	@JsonIgnore
 	private List<Livre> livres; // +get/set
 
 	// CONSTRUSTEUR

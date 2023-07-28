@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -41,6 +43,7 @@ public class Exemplaire {
 
 	@ManyToOne // Many exemplaire To one Livre
 	@JoinColumn(name = "id_livre")
+	@JsonIgnore
 	private Livre livre;
 
 	// COSNTRUCTEUR
