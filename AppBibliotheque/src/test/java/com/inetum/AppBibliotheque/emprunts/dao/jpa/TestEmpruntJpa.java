@@ -44,10 +44,9 @@ public class TestEmpruntJpa {
 	@Test
 	public void testEmprunt() {
 
-		Livre livre = daoLivre
-					.insert(new Livre(null, "le bon livre", "by me", "the other side", 3, null));
+		Livre livre = daoLivre.insert(new Livre(null, "le bon livre", "by me", "the other side", null));
 		Livre livre2 = daoLivre
-					.insert(new Livre(null, "the other livre", "by you", "the other side", 3, null));
+					.insert(new Livre(null, "the other livre", "by you", "the other side", null));
 		Exemplaire livrePris = daoExemplLivre
 					.insert(new Exemplaire(null, EtatLivre.BON_ETAT, "exmpl1", livre));
 		Exemplaire livrePris1 = daoExemplLivre
