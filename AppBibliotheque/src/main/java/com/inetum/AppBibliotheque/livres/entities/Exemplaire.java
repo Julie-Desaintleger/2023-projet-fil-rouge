@@ -55,6 +55,12 @@ public class Exemplaire {
 		this.label = label;
 		this.livre = livre;
 	}
+	public Exemplaire(Long idExemp, EtatLivre etat, String label) {
+		super();
+		this.idExemp = idExemp;
+		this.etat = etat;
+		this.label = label;
+	}
 
 	// TO STRING
 

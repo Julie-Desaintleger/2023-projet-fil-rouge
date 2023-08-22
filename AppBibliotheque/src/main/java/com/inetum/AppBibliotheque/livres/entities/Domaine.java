@@ -10,7 +10,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -25,7 +24,6 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity
 
-@NamedQuery(name = "Domaine.findDomaineByNom", query = "SELECT d FROM Domaine d WHERE d.nom= ?1")
 
 public class Domaine {
 

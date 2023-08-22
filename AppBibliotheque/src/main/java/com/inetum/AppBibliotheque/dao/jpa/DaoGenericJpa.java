@@ -19,12 +19,12 @@ public abstract class DaoGenericJpa<E, PK> implements IDaoGeneric<E, PK> {
 	public abstract EntityManager getEntityManager();
 
 	@Override
-	public E findById(PK id) {
+	public E searchById(PK id) {
 		return getEntityManager().find(entityClass, id);
 	}
 
 	@Override
-	public List<E> findAll() {
+	public List<E> searchAll() {
 		return getEntityManager().createQuery("FROM " + entityClass.getSimpleName(), entityClass)
 				.getResultList();
 	}
@@ -36,7 +36,7 @@ public abstract class DaoGenericJpa<E, PK> implements IDaoGeneric<E, PK> {
 	}
 
 	@Override
-	public void update(E e) {
+	public void saveOrUpdate(E e) {
 		getEntityManager().merge(e);
 	}
 

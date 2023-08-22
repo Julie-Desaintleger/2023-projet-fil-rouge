@@ -30,12 +30,12 @@ public class DaoAdministrateurJpa extends DaoGenericJpa<Administrateur, Long>
 	}
 
 	@Override
-	public Administrateur findById(Long numero) {
+	public Administrateur searchById(Long numero) {
 		return entityManager.find(Administrateur.class, numero);
 	}
 
 	@Override
-	public List<Administrateur> findAll() {
+	public List<Administrateur> searchAll() {
 		return entityManager.createNamedQuery("Administrateur.findAll", Administrateur.class)
 					.getResultList();
 	}
@@ -47,7 +47,7 @@ public class DaoAdministrateurJpa extends DaoGenericJpa<Administrateur, Long>
 	}
 
 	@Override
-	public void update(Administrateur admin) {
+	public void saveOrUpdate(Administrateur admin) {
 		entityManager.merge(admin);
 	}
 

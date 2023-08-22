@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<entity-mappings
+	xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm
+        http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd"
+	version="2.2">
+
+	<entity
+		class="com.inetum.AppBibliotheque.personnes.entities.Personne"
+		name="Personne" access="FIELD">
+		<table name="personne" />
+		<!-- <schema name="...." /> -->
+		<attributes>
+			<id name="idPersonne">
+				<column name="numero" />
+				<generated-value strategy="SEQUENCE"
+					generator="PERSONNE_SEQ_GENERATOR" />
+				<sequence-generator name="PERSONNE_SEQ_GENERATOR"
+					sequence-name="PERSONNE_SEQ" allocation-size='1' />
+			</id>
+		</attributes>
+	</entity>
+
+	<entity class="com.inetum.AppBibliotheque.livres.entities.Livre"
+		name="Livre" access="FIELD">
+		<table name="Livre" />
+		<!-- <schema name="...." /> -->
+		<attributes>
+			<id name="idLivre">
+				<column name="idLivre" />
+				<generated-value strategy="SEQUENCE"
+					generator="LIVRE_SEQ_GENERATOR" />
+				<sequence-generator name="LIVRE_SEQ_GENERATOR"
+					sequence-name="LIVRE_SEQ" allocation-size='1' />
+			</id>
+		</attributes>
+	</entity>
+
+	<entity
+		class="com.inetum.AppBibliotheque.livres.entities.Exemplaire"
+		name="Exemplaire" access="FIELD">
+		<table name="exemplaire" />
+		<!-- <schema name="...." /> -->
+		<attributes>
+			<id name="idExemp">
+				<column name="idExemp" />
+				<generated-value strategy="SEQUENCE"
+					generator="EXEMPLAIRE_SEQ_GENERATOR" />
+				<sequence-generator
+					name="EXEMPLAIRE_SEQ_GENERATOR" sequence-name="EXEMPLAIRE_SEQ"
+					allocation-size='1' />
+			</id>
+		</attributes>
+	</entity>
+
+	<entity
+		class="com.inetum.AppBibliotheque.livres.entities.Domaine"
+		name="Domaine" access="FIELD">
+		<table name="domaine" />
+		<!-- <schema name="...." /> -->
+		<attributes>
+			<id name="id">
+				<column name="id" />
+				<generated-value strategy="SEQUENCE"
+					generator="DOMAINE_SEQ_GENERATOR" />
+				<sequence-generator name="DOMAINE_SEQ_GENERATOR"
+					sequence-name="DOMAINE_SEQ" allocation-size='1' />
+			</id>
+		</attributes>
+	</entity>
+
+	<entity
+		class="com.inetum.AppBibliotheque.emprunts.entities.Emprunter"
+		name="Emprunter" access="FIELD">
+		<table name="emprunter" />
+		<!-- <schema name="...." /> -->
+		<attributes>
+			<id name="id">
+				<column name="id" />
+				<generated-value strategy="SEQUENCE"
+					generator="EMPRUNTER_SEQ_GENERATOR" />
+				<sequence-generator
+					name="EMPRUNTER_SEQ_GENERATOR" sequence-name="EMPRUNTER_SEQ"
+					allocation-size='1' />
+			</id>
+		</attributes>
+	</entity>
+
+
+
+</entity-mappings>

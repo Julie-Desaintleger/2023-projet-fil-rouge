@@ -1,12 +1,15 @@
 package com.inetum.AppBibliotheque.livres.dao.interfaces;
 import java.util.List;
 
-import com.inetum.AppBibliotheque.dao.interfaces.IDaoGeneric;
+import org.springframework.data.jpa.repository.JpaRepository;
+
 import com.inetum.AppBibliotheque.livres.entities.Domaine;
 
-public interface IDaoDomaine extends IDaoGeneric<Domaine, Long>{
 
-	List<Domaine> findDomaineByNom(String nom);
+
+public interface IDaoDomaine extends  JpaRepository<Domaine, Long>{
+
+	List<Domaine> findByNom(String nom);
 	
 	
 

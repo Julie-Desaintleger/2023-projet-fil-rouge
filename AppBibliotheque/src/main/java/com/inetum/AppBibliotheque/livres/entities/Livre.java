@@ -12,7 +12,6 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,7 +26,6 @@ import lombok.Setter;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @Entity
 
-@NamedQuery(name = "Livre.findLivreByTitre", query = "SELECT l FROM Livre l WHERE l.titre= ?1")
 
 public class Livre {
 
@@ -58,6 +56,13 @@ public class Livre {
 		this.auteur = auteur;
 		this.editeur = editeur;
 		this.domaine = domaine;
+	}
+	public Livre(Long idLivre, String titre, String auteur, String editeur) {
+		super();
+		this.idLivre = idLivre;
+		this.titre = titre;
+		this.auteur = auteur;
+		this.editeur = editeur;
 	}
 
 	@Override

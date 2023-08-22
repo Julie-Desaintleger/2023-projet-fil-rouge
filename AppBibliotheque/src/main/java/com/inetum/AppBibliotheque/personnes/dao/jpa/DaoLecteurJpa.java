@@ -29,12 +29,12 @@ public class DaoLecteurJpa extends DaoGenericJpa<Lecteur, Long> implements IDaoL
 	}
 
 	@Override
-	public Lecteur findById(Long numero) {
+	public Lecteur searchById(Long numero) {
 		return entityManager.find(Lecteur.class, numero);
 	}
 
 	@Override
-	public List<Lecteur> findAll() {
+	public List<Lecteur> searchAll() {
 		return entityManager.createNamedQuery("Lecteur.findAll", Lecteur.class).getResultList();
 	}
 
@@ -45,7 +45,7 @@ public class DaoLecteurJpa extends DaoGenericJpa<Lecteur, Long> implements IDaoL
 	}
 
 	@Override
-	public void update(Lecteur lecteur) {
+	public void saveOrUpdate(Lecteur lecteur) {
 		entityManager.merge(lecteur);
 	}
 

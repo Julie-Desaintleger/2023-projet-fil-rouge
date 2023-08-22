@@ -29,12 +29,12 @@ public class DaoPersonneJpa extends DaoGenericJpa<Personne, Long> implements IDa
 	}
 
 	@Override
-	public Personne findById(Long numero) {
+	public Personne searchById(Long numero) {
 		return entityManager.find(Personne.class, numero);
 	}
 
 	@Override
-	public List<Personne> findAll() {
+	public List<Personne> searchAll() {
 		return entityManager.createNamedQuery("Personne.findAll", Personne.class).getResultList();
 	}
 
@@ -45,7 +45,7 @@ public class DaoPersonneJpa extends DaoGenericJpa<Personne, Long> implements IDa
 	}
 
 	@Override
-	public void update(Personne p) {
+	public void saveOrUpdate(Personne p) {
 		entityManager.merge(p);
 	}
 

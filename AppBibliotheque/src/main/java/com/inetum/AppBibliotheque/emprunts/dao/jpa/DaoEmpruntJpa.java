@@ -29,12 +29,12 @@ public class DaoEmpruntJpa extends DaoGenericJpa<Emprunter, Long> implements IDa
 	}
 
 	@Override
-	public Emprunter findById(Long numero) {
+	public Emprunter searchById(Long numero) {
 		return entityManager.find(Emprunter.class, numero);
 	}
 
 	@Override
-	public List<Emprunter> findAll() {
+	public List<Emprunter> searchAll() {
 		return entityManager.createNamedQuery("Emprunter.findAll", Emprunter.class).getResultList();
 	}
 
@@ -45,7 +45,7 @@ public class DaoEmpruntJpa extends DaoGenericJpa<Emprunter, Long> implements IDa
 	}
 
 	@Override
-	public void update(Emprunter emprunt) {
+	public void saveOrUpdate(Emprunter emprunt) {
 		entityManager.merge(emprunt);
 	}
 

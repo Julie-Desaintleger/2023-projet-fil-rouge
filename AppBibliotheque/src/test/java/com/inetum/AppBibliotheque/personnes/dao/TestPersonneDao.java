@@ -54,17 +54,17 @@ public class TestPersonneDao {
 					null, null, "rogeradmin", "1234"));
 		daoLecteurJpa.insert(new Lecteur(null, "Benoit", "Georges", null, null, null));
 
-		List<Personne> personnes = daoPersonneJpa.findAll();
+		List<Personne> personnes = daoPersonneJpa.searchAll();
 		assertEquals(personnes.size(), 4);
 
 		logger.trace("Liste de personnes=" + personnes);
 
-		List<Administrateur> admins = daoAdministrateurJpa.findAll();
+		List<Administrateur> admins = daoAdministrateurJpa.searchAll();
 		assertEquals(admins.size(), 1);
 
 		logger.trace("Liste d'administrateurs=" + admins);
 
-		List<Lecteur> lecteurs = daoLecteurJpa.findAll();
+		List<Lecteur> lecteurs = daoLecteurJpa.searchAll();
 		assertEquals(lecteurs.size(), 1);
 
 		logger.trace("Liste de lecteurs=" + lecteurs);
@@ -91,7 +91,7 @@ public class TestPersonneDao {
 		person.setEmail("j.valjeant@inetum.com");
 		person.setTelephone("0602030405");
 
-		daoPersonneJpa.update(person);
+		daoPersonneJpa.saveOrUpdate(person);
 		assertEquals(jean.getIdPersonne(), idJean);
 		assertEquals(jean.getNom(), "Valjeant");
 		assertEquals(jean.getPrenom(), "Jeannot");
@@ -114,7 +114,7 @@ public class TestPersonneDao {
 		person.setTelephone("");
 		person.setAdresse("30 rue du bonheur");
 
-		daoPersonneJpa.update(person);
+		daoPersonneJpa.saveOrUpdate(person);
 		assertTrue(person.getEmail().equals("j.valjeant@inetum.com"));
 		logger.trace("personUpdate=" + person);
 
@@ -130,7 +130,7 @@ public class TestPersonneDao {
 		admin.setUsername("rrobert");
 		admin.setPassword("0101");
 
-		daoAdministrateurJpa.update(admin);
+		daoAdministrateurJpa.saveOrUpdate(admin);
 		assertTrue(admin.getEmail().equals("r.robert@biblio.com"));
 		assertTrue(admin.getUsername().equals("rrobert"));
 		assertTrue(admin.getPassword().equals("0101"));
@@ -145,7 +145,7 @@ public class TestPersonneDao {
 		lecteur.setNom("Georges");
 		lecteur.setEmail("b.georges@inetum.com");
 
-		daoLecteurJpa.update(lecteur);
+		daoLecteurJpa.saveOrUpdate(lecteur);
 		assertTrue(lecteur.getEmail().equals("b.georges@inetum.com"));
 		logger.trace("lecteurUpdate=" + lecteur);
 
@@ -160,7 +160,7 @@ public class TestPersonneDao {
 		logger.trace("id of person=" + id);
 
 		daoPersonneJpa.deleteById(id);
-		var idDeleted = daoPersonneJpa.findById(id);
+		var idDeleted = daoPersonneJpa.searchById(id);
 		assertNull(idDeleted);
 		logger.trace("idDeleted=" + idDeleted);
 	}
@@ -174,7 +174,7 @@ public class TestPersonneDao {
 		logger.trace("id of admin=" + id);
 
 		daoAdministrateurJpa.deleteById(id);
-		var idDeleted = daoAdministrateurJpa.findById(id);
+		var idDeleted = daoAdministrateurJpa.searchById(id);
 		assertNull(idDeleted);
 		logger.trace("idDeleted=" + idDeleted);
 	}
@@ -187,7 +187,7 @@ public class TestPersonneDao {
 		logger.trace("id of person=" + id);
 
 		daoLecteurJpa.deleteById(id);
-		var idDeleted = daoLecteurJpa.findById(id);
+		var idDeleted = daoLecteurJpa.searchById(id);
 		assertNull(idDeleted);
 		logger.trace("idDeleted=" + idDeleted);
 	}

@@ -1,4 +1,4 @@
-package com.inetum.AppBibliotheque.emprunts.dao.jpa;
+package com.inetum.AppBibliotheque.emprunts.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -68,7 +68,7 @@ public class TestEmpruntJpa {
 						new Emprunter(null, null, null, TypeEmprunt.RESERVE, lecteur, livrePris));
 		}
 
-		List<Emprunter> emprunts = daoEmpruntJpa.findAll();
+		List<Emprunter> emprunts = daoEmpruntJpa.searchAll();
 		assertEquals(emprunts.size(), 2);
 
 		logger.trace("Liste d emprunts=" + emprunts);

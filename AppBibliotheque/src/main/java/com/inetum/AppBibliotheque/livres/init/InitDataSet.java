@@ -3,6 +3,7 @@ package com.inetum.AppBibliotheque.livres.init;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import com.inetum.AppBibliotheque.livres.dao.interfaces.IDaoDomaine;
@@ -18,6 +19,7 @@ import com.inetum.AppBibliotheque.livres.entities.Livre;
  */
 
 @Component
+@Profile("init")
 
 public class InitDataSet {
 
@@ -28,54 +30,56 @@ public class InitDataSet {
 
 	@Autowired
 	private IDaoDomaine daoDomaine;
+	
+	
 
 	@PostConstruct
 	public void initData() {
-//		daoLivreJpa.insert(new Livre(null,"PHP" , "Victor", "Eni"));
-//    	daoLivreJpa.insert(new Livre(null,"Java" , "Romain", "Oracle"));
-//    	daoLivreJpa.insert(new Livre(null,"Bases HTML" , "Anouar", "Eyrolles"));
-//    	daoLivreJpa.insert(new Livre(null,"Bases HTML" , "Emily", "Eyrolles"));
-//    	daoLivreJpa.insert(new Livre(null,"Bases CSS" , "Victor", "Fist"));
-//    	daoLivreJpa.insert(new Livre(null,"Bases JPA Hibernete" , "Didier", "m2i"));
-//    	daoLivreJpa.insert(new Livre(null,"Bases JPA Hibernete" , "Didier", "First"));
+//		daoLivreJpa.save(new Livre(null,"PHP" , "Victor", "Eni"));
+//    	daoLivreJpa.save(new Livre(null,"Java" , "Romain", "Oracle"));
+//    	daoLivreJpa.save(new Livre(null,"Bases HTML" , "Anouar", "Eyrolles"));
+//    	daoLivreJpa.save(new Livre(null,"Bases HTML" , "Emily", "Eyrolles"));
+//    	daoLivreJpa.save(new Livre(null,"Bases CSS" , "Victor", "Fist"));
+//    	daoLivreJpa.save(new Livre(null,"Bases JPA Hibernete" , "Didier", "m2i"));
+//    	daoLivreJpa.save(new Livre(null,"Bases JPA Hibernete" , "Didier", "First"));
 		
 		// LIVRE1
 
 		Domaine domaine1 = new Domaine(null, "Developpement", "les bases du développemet JAVA");
-		daoDomaine.insert(domaine1);
+		daoDomaine.save(domaine1);
 
-		Livre livre1 = daoLivreJpa.insert(new Livre(null, "PHP", "Victor", "Eni", domaine1));
+		Livre livre1 = daoLivreJpa.save(new Livre(null, "PHP", "Victor", "Eni", domaine1));
 
 		// NB EXEMPLAIRE(n,p) = EXEMPLAIRE p du LIVRE n
 
 		Exemplaire exemplaire11 = daoExemplaire
-				.insert(new Exemplaire(null, Exemplaire.EtatLivre.ABIME, "exemlpaire11", livre1));
+				.save(new Exemplaire(null, Exemplaire.EtatLivre.ABIME, "exemlpaire11", livre1));
 		exemplaire11.setIsDisponibilite(true);
-		daoExemplaire.update(exemplaire11);
+		daoExemplaire.save(exemplaire11);
 
 		Exemplaire exemplaire12 = daoExemplaire
-				.insert(new Exemplaire(null, Exemplaire.EtatLivre.BON_ETAT, "exemlpaire12", livre1));
+				.save(new Exemplaire(null, Exemplaire.EtatLivre.BON_ETAT, "exemlpaire12", livre1));
 		exemplaire12.setIsDisponibilite(true);
-		daoExemplaire.update(exemplaire12);
+		daoExemplaire.save(exemplaire12);
 
 		Exemplaire exemplaire13 = daoExemplaire
-				.insert(new Exemplaire(null, Exemplaire.EtatLivre.HORS_SERVICE, "exemlpaire13", livre1));
+				.save(new Exemplaire(null, Exemplaire.EtatLivre.HORS_SERVICE, "exemlpaire13", livre1));
 		exemplaire13.setIsDisponibilite(false);
-		daoExemplaire.update(exemplaire13);
+		daoExemplaire.save(exemplaire13);
 
 		Domaine domaine2 = new Domaine(null, "Back-end", "les bases d'un bon code");
-		daoDomaine.insert(domaine2);
+		daoDomaine.save(domaine2);
 
-		Livre livre2 = daoLivreJpa.insert(new Livre(null, "Java", "Romain", "Oracle", domaine2));
+		Livre livre2 = daoLivreJpa.save(new Livre(null, "Java", "Romain", "Oracle", domaine2));
 		Exemplaire exemplaire21 = daoExemplaire
-				.insert(new Exemplaire(null, Exemplaire.EtatLivre.BON_ETAT, "exemlpaire21", livre2));
+				.save(new Exemplaire(null, Exemplaire.EtatLivre.BON_ETAT, "exemlpaire21", livre2));
 		exemplaire21.setIsDisponibilite(true);
-		daoExemplaire.update(exemplaire21);
+		daoExemplaire.save(exemplaire21);
 
 		Exemplaire exemplaire22 = daoExemplaire
-				.insert(new Exemplaire(null, Exemplaire.EtatLivre.HORS_SERVICE, "exemlpaire22", livre2));
+				.save(new Exemplaire(null, Exemplaire.EtatLivre.HORS_SERVICE, "exemlpaire22", livre2));
 		exemplaire22.setIsDisponibilite(false);
-		daoExemplaire.update(exemplaire22);
+		daoExemplaire.save(exemplaire22);
 
 	}
 

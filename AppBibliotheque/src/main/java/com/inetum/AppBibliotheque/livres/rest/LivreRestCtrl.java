@@ -38,7 +38,7 @@ public class LivreRestCtrl {
 	@GetMapping("/{idLivre}")
 
 	public ResponseEntity<?> getLivreById(@PathVariable("idLivre") Long idLivre) {
-		Livre livre = daoLivreJpa.findById(idLivre);
+		Livre livre = daoLivreJpa.findById(idLivre).orElse(null);
 		if (livre != null) {
 			return new ResponseEntity<Livre>(livre, HttpStatus.OK);
 		} else {
@@ -59,7 +59,7 @@ public class LivreRestCtrl {
 
 	@DeleteMapping("/{idLivre}")
 	public ResponseEntity<?> deleteCompteByNumero(@PathVariable("idLivre") Long idLivre) {
-		Livre LivreAsupprimer = daoLivreJpa.findById(idLivre);
+		Livre LivreAsupprimer = daoLivreJpa.findById(idLivre).orElse(null);
 		if (LivreAsupprimer == null)
 			return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}", HttpStatus.NOT_FOUND); // NOT_FOUND =
 																											// code http
@@ -78,14 +78,14 @@ public class LivreRestCtrl {
 	// { "idLivre" : null , "titre" : " " , "auteur" : ,"editeur" : }
 	@PostMapping("/domaine")
 	public Domaine postDomaine( @RequestBody  Domaine nouveauDomaine) {
-		Domaine domaineEnregistreEnBase = daoDomaineJpa.insert(nouveauDomaine);
+		Domaine domaineEnregistreEnBase = daoDomaineJpa.save(nouveauDomaine);
 		return domaineEnregistreEnBase;// on retourne le livre avec la clee primaire auro-incremenrée
 	}
 
 
 	@PostMapping("")
 	public Livre postLivre(@RequestBody Livre nouveauLivre) {		
-		Livre livreEnregistreEnBase = daoLivreJpa.insert(nouveauLivre);
+		Livre livreEnregistreEnBase = daoLivreJpa.save(nouveauLivre);
 		return livreEnregistreEnBase;// on retourne le livre avec la clee primaire auro-incremenrée
 	}
 }
