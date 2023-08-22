@@ -46,25 +46,25 @@ public class TestPersonneDao {
 
 	@Test
 	public void testPersonnesAdminLecteur() {
-		daoPersonneJpa.insert(new Personne(null, "Jean", "Valjean", "jean@inetum.com", "0102030405",
+		daoPersonneJpa.save(new Personne(null, "Jean", "Valjean", "jean@inetum.com", "0102030405",
 					"rue de la maison"));
-		daoPersonneJpa.insert(new Personne(null, "Gerard", "Duchemin", "gerard@inetum.com", "0102030405",
+		daoPersonneJpa.save(new Personne(null, "Gerard", "Duchemin", "gerard@inetum.com", "0102030405",
 					"rue de la maison"));
-		daoAdministrateurJpa.insert(new Administrateur(null, "Roger", "Theboss", "roger@biblio.com",
+		daoAdministrateurJpa.save(new Administrateur(null, "Roger", "Theboss", "roger@biblio.com",
 					null, null, "rogeradmin", "1234"));
-		daoLecteurJpa.insert(new Lecteur(null, "Benoit", "Georges", null, null, null));
+		daoLecteurJpa.save(new Lecteur(null, "Benoit", "Georges", null, null, null));
 
-		List<Personne> personnes = daoPersonneJpa.searchAll();
+		List<Personne> personnes = daoPersonneJpa.findAll();
 		assertEquals(personnes.size(), 4);
 
 		logger.trace("Liste de personnes=" + personnes);
 
-		List<Administrateur> admins = daoAdministrateurJpa.searchAll();
+		List<Administrateur> admins = daoAdministrateurJpa.findAll();
 		assertEquals(admins.size(), 1);
 
 		logger.trace("Liste d'administrateurs=" + admins);
 
-		List<Lecteur> lecteurs = daoLecteurJpa.searchAll();
+		List<Lecteur> lecteurs = daoLecteurJpa.findAll();
 		assertEquals(lecteurs.size(), 1);
 
 		logger.trace("Liste de lecteurs=" + lecteurs);
@@ -74,7 +74,7 @@ public class TestPersonneDao {
 	public void testPersonne() {
 		Personne jean = new Personne(null, "Jean", "Valjean", "jean@inetum.com", "0102030405",
 					"rue de la maison");
-		Personne person = daoPersonneJpa.insert(jean);
+		Personne person = daoPersonneJpa.save(jean);
 		var idJean = person.getIdPersonne();
 		logger.trace("person=" + person);
 
@@ -91,7 +91,7 @@ public class TestPersonneDao {
 		person.setEmail("j.valjeant@inetum.com");
 		person.setTelephone("0602030405");
 
-		daoPersonneJpa.saveOrUpdate(person);
+		daoPersonneJpa.save(person);
 		assertEquals(jean.getIdPersonne(), idJean);
 		assertEquals(jean.getNom(), "Valjeant");
 		assertEquals(jean.getPrenom(), "Jeannot");
@@ -105,7 +105,7 @@ public class TestPersonneDao {
 
 	@Test
 	public void testUpdatePersonne() {
-		Personne person = daoPersonneJpa.insert(new Personne(null, "Jean", "Valjean", "jean@inetum.com",
+		Personne person = daoPersonneJpa.save(new Personne(null, "Jean", "Valjean", "jean@inetum.com",
 					"0102030405", "rue de la maison"));
 		logger.trace("person=" + person);
 		person.setPrenom("Jeannot");
@@ -114,7 +114,7 @@ public class TestPersonneDao {
 		person.setTelephone("");
 		person.setAdresse("30 rue du bonheur");
 
-		daoPersonneJpa.saveOrUpdate(person);
+		daoPersonneJpa.save(person);
 		assertTrue(person.getEmail().equals("j.valjeant@inetum.com"));
 		logger.trace("personUpdate=" + person);
 
@@ -122,7 +122,7 @@ public class TestPersonneDao {
 
 	@Test
 	public void testUpdateAdmin() {
-		Administrateur admin = daoAdministrateurJpa.insert(new Administrateur(null, "Roger", "Theboss",
+		Administrateur admin = daoAdministrateurJpa.save(new Administrateur(null, "Roger", "Theboss",
 					"roger@biblio.com", null, null, "rogeradmin", "1234"));
 		logger.trace("admin=" + admin);
 		admin.setNom("Robert");
@@ -130,7 +130,7 @@ public class TestPersonneDao {
 		admin.setUsername("rrobert");
 		admin.setPassword("0101");
 
-		daoAdministrateurJpa.saveOrUpdate(admin);
+		daoAdministrateurJpa.save(admin);
 		assertTrue(admin.getEmail().equals("r.robert@biblio.com"));
 		assertTrue(admin.getUsername().equals("rrobert"));
 		assertTrue(admin.getPassword().equals("0101"));
@@ -140,12 +140,12 @@ public class TestPersonneDao {
 
 	@Test
 	public void testUpdateLecteur() {
-		Lecteur lecteur = daoLecteurJpa.insert(new Lecteur(null, "Benoit", "Georges", null, null, null));
+		Lecteur lecteur = daoLecteurJpa.save(new Lecteur(null, "Benoit", "Georges", null, null, null));
 		logger.trace("lecteur=" + lecteur);
 		lecteur.setNom("Georges");
 		lecteur.setEmail("b.georges@inetum.com");
 
-		daoLecteurJpa.saveOrUpdate(lecteur);
+		daoLecteurJpa.save(lecteur);
 		assertTrue(lecteur.getEmail().equals("b.georges@inetum.com"));
 		logger.trace("lecteurUpdate=" + lecteur);
 
@@ -153,43 +153,43 @@ public class TestPersonneDao {
 
 	@Test
 	public void testDeletePersonne() {
-		Personne person = daoPersonneJpa.insert(new Personne(null, "Jean", "Valjean", "jean@inetum.com",
+		Personne person = daoPersonneJpa.save(new Personne(null, "Jean", "Valjean", "jean@inetum.com",
 					"0102030405", "rue de la maison"));
 		logger.trace("person=" + person);
 		Long id = person.getIdPersonne();
 		logger.trace("id of person=" + id);
 
 		daoPersonneJpa.deleteById(id);
-		var idDeleted = daoPersonneJpa.searchById(id);
+		Personne idDeleted = daoPersonneJpa.findById(id).orElse(null);
 		assertNull(idDeleted);
 		logger.trace("idDeleted=" + idDeleted);
 	}
 
 	@Test
 	public void testDeleteAdmin() {
-		Administrateur admin = daoAdministrateurJpa.insert(new Administrateur(null, "Roger", "Theboss",
+		Administrateur admin = daoAdministrateurJpa.save(new Administrateur(null, "Roger", "Theboss",
 					"roger@biblio.com", null, null, "rogeradmin", "1234"));
 		logger.trace("admin=" + admin);
 		Long id = admin.getIdPersonne();
 		logger.trace("id of admin=" + id);
 
 		daoAdministrateurJpa.deleteById(id);
-		var idDeleted = daoAdministrateurJpa.searchById(id);
-		assertNull(idDeleted);
-		logger.trace("idDeleted=" + idDeleted);
+		Administrateur AdminDeleted = daoAdministrateurJpa.findById(id).orElse(null);
+		assertNull(AdminDeleted);
+		logger.trace("idDeleted=" + AdminDeleted);
 	}
 
 	@Test
 	public void testDeleteLecteur() {
-		Lecteur lecteur = daoLecteurJpa.insert(new Lecteur(null, "Benoit", "Georges", null, null, null));
+		Lecteur lecteur = daoLecteurJpa.save(new Lecteur(null, "Benoit", "Georges", null, null, null));
 		logger.trace("lecteur=" + lecteur);
 		Long id = lecteur.getIdPersonne();
 		logger.trace("id of person=" + id);
 
 		daoLecteurJpa.deleteById(id);
-		var idDeleted = daoLecteurJpa.searchById(id);
-		assertNull(idDeleted);
-		logger.trace("idDeleted=" + idDeleted);
+		Lecteur LecteuridDeleted = daoLecteurJpa.findById(id).orElse(null);
+		assertNull(LecteuridDeleted);
+		logger.trace("idDeleted=" + LecteuridDeleted);
 	}
 
 }

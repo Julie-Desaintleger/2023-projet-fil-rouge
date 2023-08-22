@@ -8,14 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.NamedQuery;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@NamedQuery(name = "Personne.findAll", query = "SELECT p FROM Personne p")
 @Getter
 @Setter
 @NoArgsConstructor

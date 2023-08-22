@@ -29,7 +29,7 @@ public class PersonneRestCtrl {
 	// exemple URL de déclenchement: ./api-personnes/personne/1
 	@GetMapping("/{idPersonne}")
 	public ResponseEntity<?> getPersonneById(@PathVariable("idPersonne") Long idPersonne) {
-		Personne personne = daoPersonneJpa.searchById(idPersonne);
+		Personne personne = daoPersonneJpa.findById(idPersonne).orElse(null);
 		if (personne != null) {
 			return new ResponseEntity<Personne>(personne, HttpStatus.OK);
 		} else {
@@ -43,7 +43,7 @@ public class PersonneRestCtrl {
 	// ./api-personnes/personne
 	@GetMapping("")
 	public List<Personne> getPersonnes() {
-		return daoPersonneJpa.searchAll();
+		return daoPersonneJpa.findAll();
 
 	}
 
@@ -54,7 +54,7 @@ public class PersonneRestCtrl {
 	// "toto@mail.com", "telephone" : "0102030405" , "adresse" : "chez moi"}
 	@PostMapping("")
 	public Personne postPersonne(@RequestBody Personne newPersonne) {
-		Personne personneSaved = daoPersonneJpa.insert(newPersonne);
+		Personne personneSaved = daoPersonneJpa.save(newPersonne);
 		return personneSaved; // on retourne la personne avec la clé primaire auto-incr
 	}
 
@@ -70,7 +70,7 @@ public class PersonneRestCtrl {
 		Long numPersonneToUpdate = idPersonne != null ? idPersonne : personne.getIdPersonne();
 
 		Personne personneExistante = numPersonneToUpdate != null
-					? daoPersonneJpa.searchById(numPersonneToUpdate)
+					? daoPersonneJpa.findById(numPersonneToUpdate).orElse(null)
 					: null;
 		if (personneExistante == null) {
 			return new ResponseEntity<String>("{ \"err\" : \"personne not found\"}",
@@ -79,7 +79,7 @@ public class PersonneRestCtrl {
 			if (personne.getIdPersonne() == null) {
 				personne.setIdPersonne(numPersonneToUpdate);
 			}
-			daoPersonneJpa.saveOrUpdate(personne);
+			daoPersonneJpa.save(personne);
 			return new ResponseEntity<Personne>(personne, HttpStatus.OK);
 		}
 
@@ -88,7 +88,7 @@ public class PersonneRestCtrl {
 	// exemple URL de déclenchement: ./api-personnes/personne/1
 	@DeleteMapping("/{idPersonne}")
 	public ResponseEntity<?> deleteCompteById(@PathVariable("idPersonne") Long idPersonne) {
-		Personne personneAsupprimer = daoPersonneJpa.searchById(idPersonne);
+		Personne personneAsupprimer = daoPersonneJpa.findById(idPersonne).orElse(null);
 		if (personneAsupprimer != null) {
 			daoPersonneJpa.deleteById(idPersonne);
 			return new ResponseEntity<String>("{ \"done\" : \"personne deleted\"}", HttpStatus.OK);
