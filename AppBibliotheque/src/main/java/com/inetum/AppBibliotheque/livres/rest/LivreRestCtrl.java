@@ -58,7 +58,7 @@ public class LivreRestCtrl {
 	// DELETE
 
 	@DeleteMapping("/{idLivre}")
-	public ResponseEntity<?> deleteCompteByNumero(@PathVariable("idLivre") Long idLivre) {
+	public ResponseEntity<?> deleteLivreById(@PathVariable("idLivre") Long idLivre) {
 		Livre LivreAsupprimer = daoLivreJpa.findById(idLivre).orElse(null);
 		if (LivreAsupprimer == null)
 			return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}", HttpStatus.NOT_FOUND); // NOT_FOUND =
