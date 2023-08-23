@@ -9,18 +9,14 @@ public class LivreDto {
 	private String titre;
 	private String auteur;
 	private String editeur;
-	private Long idDomaine;
 	
-	public LivreDto(Long idLivre, String titre, String auteur, String editeur, Long idDomaine) {
+	public LivreDto(Long idLivre, String titre, String auteur, String editeur) {
 		super();
 		this.idLivre = idLivre;
 		this.titre = titre;
 		this.auteur = auteur;
 		this.editeur = editeur;
-		this.idDomaine = idDomaine;
-	}
-	public LivreDto(Long idLivre, String titre, String auteur, String editeur) {
-		this(idLivre, titre, auteur, editeur, null);
+		
 	}
 	
 	

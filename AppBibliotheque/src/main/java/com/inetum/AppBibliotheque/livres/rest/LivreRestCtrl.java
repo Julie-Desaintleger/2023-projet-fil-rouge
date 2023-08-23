@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.inetum.AppBibliotheque.converter.GenericConverter;
 import com.inetum.AppBibliotheque.livres.Dto.DomaineDto;
 import com.inetum.AppBibliotheque.livres.Dto.LivreDto;
+import com.inetum.AppBibliotheque.livres.Dto.LivreDtoEx;
 import com.inetum.AppBibliotheque.livres.entities.Domaine;
 import com.inetum.AppBibliotheque.livres.entities.Livre;
 import com.inetum.AppBibliotheque.livres.services.IServiceDomaine;
@@ -40,7 +42,7 @@ public class LivreRestCtrl {
 	@GetMapping("/{idLivre}")
 
 	public ResponseEntity<?> getLivreById(@PathVariable("idLivre") Long idLivre) {
-		LivreDto livreDto = serviceLivre.searchDtoById(idLivre);
+		LivreDto livreDto = serviceLivre.searchByIdWithDomaine(idLivre);
 		if (livreDto != null) {
 			return new ResponseEntity<LivreDto>(livreDto, HttpStatus.OK);
 		} else {
@@ -86,8 +88,28 @@ public class LivreRestCtrl {
 
 
 	@PostMapping("")
-	public LivreDto postLivre(@RequestBody LivreDto nouveauLivre) {		
-		Livre livreEnregistreEnBase = serviceLivre.saveOrUpdate(GenericConverter.map(nouveauLivre, Livre.class) );
-		return GenericConverter.map(livreEnregistreEnBase, LivreDto.class);// on retourne le livre avec la clee primaire auro-incremenrée
+	public LivreDto postLivre(@RequestBody LivreDtoEx nouveauLivre) {		
+		return serviceLivre.saveOrUpdateLivreDtoEx(nouveauLivre);
 	}
+	
+	// exemple de fin d'URL: ./api-livres/livre/1
+		// appelé en mode POST avec dans la partie invisible "body" de la requête:
+		// { "idLivre" : null , "titre" : " " , "auteur" : ,"editeur" : }
+	
+			@PutMapping({"" , "/{idLivre}" }) 
+			public ResponseEntity<?> putLivreToUpdate(@RequestBody LivreDtoEx livreDto , 
+					      @PathVariable(value="idLivre",required = false ) Long idLivre) {
+				
+				    Long idLivreToUpdate = idLivre!=null ? idLivre :livreDto.getIdLivre();
+				   
+				    serviceLivre.shouldExistById(idLivreToUpdate); //remonte NotFoundException si pas trouvé
+				    
+				    if(livreDto.getIdLivre()==null)
+				    	livreDto.setIdLivre(idLivreToUpdate);
+				    
+				    //on s'appuie ici sur la méthode spécifique ci dessous du serviceCompte
+					serviceLivre.saveOrUpdateLivreDtoEx(livreDto); 
+					
+					return new ResponseEntity<LivreDto>(livreDto , HttpStatus.OK);
+			}	
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
-import com.inetum.AppBibliotheque.converter.MyConverter;
+import com.inetum.AppBibliotheque.converter.GenericConverter;
 
 public abstract class AbstractGenericService<E, ID, DTO> implements IGenericService<E, ID, DTO> {
 
@@ -22,7 +22,7 @@ public abstract class AbstractGenericService<E, ID, DTO> implements IGenericServ
 	public DTO searchDtoById(ID id) {
 		E e = this.searchById(id);
 		if (e != null) {
-			return MyConverter.map(e, getDtoClass());
+			return GenericConverter.map(e, getDtoClass());
 
 		}
 	else
@@ -64,7 +64,7 @@ public abstract class AbstractGenericService<E, ID, DTO> implements IGenericServ
 	}
 
 	public List<DTO> searchAllDto() {
-		return MyConverter.map(this.searchAll(), getDtoClass()); // ex: dtoClass = CompteDto.class
+		return GenericConverter .map(this.searchAll(), getDtoClass()); // ex: dtoClass = CompteDto.class
 	}
 
 }
