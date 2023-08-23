@@ -1,8 +1,5 @@
 package com.inetum.AppBibliotheque.livres.Dto;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,19 +8,15 @@ public class ExemplaireDto {
 
 	private Long idExemp;
 
-	public enum EtatLivre {
-		BON_ETAT, ABIME, HORS_SERVICE
-	};
+	
 
-	@Enumerated(EnumType.STRING)
-
-	private EtatLivre etat = EtatLivre.BON_ETAT;
+	private String etat = "BON_ETAT";
 
 	private Boolean isDisponibilite; 
 
 	private String label;
 
-	public ExemplaireDto(Long idExemp, EtatLivre etat, Boolean isDisponibilite, String label) {
+	public ExemplaireDto(Long idExemp, String etat, Boolean isDisponibilite, String label) {
 		super();
 		this.idExemp = idExemp;
 		this.etat = etat;

@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inetum.AppBibliotheque.converter.GenericConverter;
 import com.inetum.AppBibliotheque.livres.Dto.DomaineDto;
+import com.inetum.AppBibliotheque.livres.Dto.ExemplaireDto;
+import com.inetum.AppBibliotheque.livres.Dto.ExemplaireDtoEx;
 import com.inetum.AppBibliotheque.livres.Dto.LivreDto;
 import com.inetum.AppBibliotheque.livres.Dto.LivreDtoEx;
 import com.inetum.AppBibliotheque.livres.entities.Domaine;
 import com.inetum.AppBibliotheque.livres.entities.Livre;
 import com.inetum.AppBibliotheque.livres.services.IServiceDomaine;
+import com.inetum.AppBibliotheque.livres.services.IServiceExemplaire;
 import com.inetum.AppBibliotheque.livres.services.IServiceLivre;
 
 @RestController
@@ -32,11 +35,12 @@ public class LivreRestCtrl {
 
 	@Autowired
 	private IServiceLivre serviceLivre;
-	
+
 	@Autowired
 	private IServiceDomaine servieDomaine;
 
-	
+	@Autowired
+	private IServiceExemplaire serviceExemplaire;
 
 	// exemple URL de déclenchement: ./api-livres/livre/1
 	@GetMapping("/{idLivre}")
@@ -50,12 +54,29 @@ public class LivreRestCtrl {
 		}
 	}
 
+	@GetMapping("/exemplaire/{idExemp}")
+
+	public ResponseEntity<?> getExempalireById(@PathVariable("idExemp") Long idExemp) {
+		ExemplaireDto exemplaireDto = serviceExemplaire.searchByIdWithLivre(idExemp);
+		if (exemplaireDto != null) {
+			return new ResponseEntity<ExemplaireDto>(exemplaireDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("{ \"err\" : \"exemplaire not found\"}", HttpStatus.NOT_FOUND);
+		}
+	}
+
 	// exemple de fin d'URL de déclenchement:
 	// ./api-livres/livre
 
 	@GetMapping("")
-	public List<LivreDto> getLivres() {
+	public List<LivreDto> getLivres() {	
 		return serviceLivre.searchAllDto();
+
+	}
+
+	@GetMapping("exemp")
+	public List<ExemplaireDto> getExemplaire() {
+		return serviceExemplaire.searchAllDto();
 
 	}
 
@@ -81,35 +102,59 @@ public class LivreRestCtrl {
 	// appelé en mode POST avec dans la partie invisible "body" de la requête:
 	// { "idLivre" : null , "titre" : " " , "auteur" : ,"editeur" : }
 	@PostMapping("/domaine")
-	public DomaineDto postDomaine( @RequestBody  DomaineDto nouveauDomaine) {
-		Domaine domaineEnregistreEnBase = servieDomaine.saveOrUpdate(GenericConverter.map(nouveauDomaine, Domaine.class));
-		return GenericConverter.map(domaineEnregistreEnBase, DomaineDto.class) ;// on retourne le livre avec la clee primaire auro-incremenrée
+	public DomaineDto postDomaine(@RequestBody DomaineDto nouveauDomaine) {
+		Domaine domaineEnregistreEnBase = servieDomaine
+				.saveOrUpdate(GenericConverter.map(nouveauDomaine, Domaine.class));
+		return GenericConverter.map(domaineEnregistreEnBase, DomaineDto.class);// on retourne le livre avec la clee
+																				// primaire auro-incremenrée
 	}
 
+	// exemple de fin d'URL: ./api-livres/livre/Exemplaire
+	@PostMapping("/exemplaire")
+	public ExemplaireDto postExemplaire(@RequestBody ExemplaireDtoEx nouvelExemplaire) {
+		return serviceExemplaire.saveOrUpdateExemplaireDtoEx(nouvelExemplaire);
+	}
 
 	@PostMapping("")
-	public LivreDto postLivre(@RequestBody LivreDtoEx nouveauLivre) {		
+	public LivreDto postLivre(@RequestBody LivreDtoEx nouveauLivre) {
 		return serviceLivre.saveOrUpdateLivreDtoEx(nouveauLivre);
 	}
-	
+
 	// exemple de fin d'URL: ./api-livres/livre/1
-		// appelé en mode POST avec dans la partie invisible "body" de la requête:
-		// { "idLivre" : null , "titre" : " " , "auteur" : ,"editeur" : }
-	
-			@PutMapping({"" , "/{idLivre}" }) 
-			public ResponseEntity<?> putLivreToUpdate(@RequestBody LivreDtoEx livreDto , 
-					      @PathVariable(value="idLivre",required = false ) Long idLivre) {
-				
-				    Long idLivreToUpdate = idLivre!=null ? idLivre :livreDto.getIdLivre();
-				   
-				    serviceLivre.shouldExistById(idLivreToUpdate); //remonte NotFoundException si pas trouvé
-				    
-				    if(livreDto.getIdLivre()==null)
-				    	livreDto.setIdLivre(idLivreToUpdate);
-				    
-				    //on s'appuie ici sur la méthode spécifique ci dessous du serviceCompte
-					serviceLivre.saveOrUpdateLivreDtoEx(livreDto); 
-					
-					return new ResponseEntity<LivreDto>(livreDto , HttpStatus.OK);
-			}	
+	// appelé en mode POST avec dans la partie invisible "body" de la requête:
+	// { "idLivre" : null , "titre" : " " , "auteur" : ,"editeur" : }
+
+	@PutMapping({ "/exemplaire", "/exemplaire/{idExemp}" })
+	public ResponseEntity<?> putExemplaireToUpdate(@RequestBody ExemplaireDtoEx exemplaireDto,
+			@PathVariable(value = "idExemp", required = false) Long idExemp) {
+
+		Long idExempToUpdate = idExemp != null ? idExemp : exemplaireDto.getIdExemp();
+
+		serviceLivre.shouldExistById(idExempToUpdate); // remonte NotFoundException si pas trouvé
+
+		if (exemplaireDto.getIdExemp() == null)
+			exemplaireDto.setIdExemp(idExempToUpdate);
+
+		// on s'appuie ici sur la méthode spécifique ci dessous du serviceCompte
+		serviceExemplaire.saveOrUpdateExemplaireDtoEx(exemplaireDto);
+
+		return new ResponseEntity<ExemplaireDto>(exemplaireDto, HttpStatus.OK);
+	}
+
+	@PutMapping({ "", "/{idLivre}" })
+	public ResponseEntity<?> putLivreToUpdate(@RequestBody LivreDtoEx livreDto,
+			@PathVariable(value = "idLivre", required = false) Long idLivre) {
+
+		Long idLivreToUpdate = idLivre != null ? idLivre : livreDto.getIdLivre();
+
+		serviceLivre.shouldExistById(idLivreToUpdate); // remonte NotFoundException si pas trouvé
+
+		if (livreDto.getIdLivre() == null)
+			livreDto.setIdLivre(idLivreToUpdate);
+
+		// on s'appuie ici sur la méthode spécifique ci dessous du serviceCompte
+		serviceLivre.saveOrUpdateLivreDtoEx(livreDto);
+
+		return new ResponseEntity<LivreDto>(livreDto, HttpStatus.OK);
+	}
 }

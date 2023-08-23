@@ -61,6 +61,14 @@ public class Exemplaire {
 		this.etat = etat;
 		this.label = label;
 	}
+	
+	public Exemplaire (Long idExemp, EtatLivre etat, Boolean isDisponibilite, String label) {
+		super();
+		this.idExemp = idExemp;
+		this.etat = etat;
+		this.isDisponibilite = isDisponibilite;
+		this.label = label;
+	}
 
 	// TO STRING
 
