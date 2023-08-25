@@ -59,6 +59,15 @@ public class Emprunter {
 		this.emprunteur = emprunteur;
 		this.exemplaireEmprunte = exemplaireEmprunte;
 	}
+	
+	public Emprunter(Long id, Date dateDebut, Date dateFin, TypeEmprunt type) {
+	super();
+	this.id = id;
+	this.dateDebut = dateDebut;
+	this.dateFin = dateFin;
+	this.type = type;
+	
+}
 
 	@Override
 	public String toString() {

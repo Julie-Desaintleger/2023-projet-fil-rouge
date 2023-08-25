@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.springframework.beans.BeanUtils;
 
+import com.inetum.AppBibliotheque.emprunts.dto.EmprunterDto;
+import com.inetum.AppBibliotheque.emprunts.dto.EmprunterDtoEx2;
+import com.inetum.AppBibliotheque.emprunts.entities.Emprunter;
 import com.inetum.AppBibliotheque.livres.Dto.DomaineDto;
 import com.inetum.AppBibliotheque.livres.Dto.ExemplaireDto;
 import com.inetum.AppBibliotheque.livres.Dto.ExemplaireDtoEx2;
@@ -51,6 +54,27 @@ public class DtoConverter {
 	
 	public /*static*/ ExemplaireDtoEx2 exemplaireToExemplaireDtoEx2(Exemplaire entity) {
 		ExemplaireDtoEx2 exemplaireDto = new ExemplaireDtoEx2();
+		BeanUtils.copyProperties(entity, exemplaireDto);
+		exemplaireDto.setLivre(GenericConverter.map(entity.getLivre(), LivreDto.class));
+		return exemplaireDto;
+	}
+	
+	
+	public /*static*/ List<EmprunterDto> emprunterToEmprunterDto(List<Emprunter> entityList) {
+		return entityList.stream()
+				.map((entity)->emprunterToEmprunterDto(entity))
+				.toList();
+	}
+	
+	public /*static*/ EmprunterDto emprunterToEmprunterDto(Emprunter  entity) {
+		return new EmprunterDto(entity.getId() , 
+				entity.getDateDebut(),
+				entity.getDateFin(),
+				entity.getType().toString());
+	}
+	
+	public /*static*/ EmprunterDtoEx2 emprunterToEmprunterDtoEx2(Emprunter entity) {
+		EmprunterDtoEx2 emprunterDto = new EmprunterDtoEx2();
 		BeanUtils.copyProperties(entity, exemplaireDto);
 		exemplaireDto.setLivre(GenericConverter.map(entity.getLivre(), LivreDto.class));
 		return exemplaireDto;
