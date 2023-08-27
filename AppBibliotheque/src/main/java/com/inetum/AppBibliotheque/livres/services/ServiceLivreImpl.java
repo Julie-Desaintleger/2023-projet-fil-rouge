@@ -10,11 +10,11 @@ import org.springframework.stereotype.Service;
 
 import com.inetum.AppBibliotheque.converter.DtoConverter;
 import com.inetum.AppBibliotheque.converter.GenericConverter;
-import com.inetum.AppBibliotheque.livres.Dto.LivreDto;
-import com.inetum.AppBibliotheque.livres.Dto.LivreDtoEx;
-import com.inetum.AppBibliotheque.livres.Dto.LivreDtoEx2;
 import com.inetum.AppBibliotheque.livres.dao.interfaces.IDaoDomaine;
 import com.inetum.AppBibliotheque.livres.dao.interfaces.IDaoLivre;
+import com.inetum.AppBibliotheque.livres.dto.LivreDto;
+import com.inetum.AppBibliotheque.livres.dto.LivreDtoEx;
+import com.inetum.AppBibliotheque.livres.dto.LivreDtoEx2;
 import com.inetum.AppBibliotheque.livres.entities.Domaine;
 import com.inetum.AppBibliotheque.livres.entities.Livre;
 import com.inetum.AppBibliotheque.services.AbstractGenericService;

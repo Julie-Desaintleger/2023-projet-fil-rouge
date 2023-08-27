@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inetum.AppBibliotheque.converter.GenericConverter;
-import com.inetum.AppBibliotheque.livres.Dto.DomaineDto;
-import com.inetum.AppBibliotheque.livres.Dto.ExemplaireDto;
-import com.inetum.AppBibliotheque.livres.Dto.ExemplaireDtoEx;
-import com.inetum.AppBibliotheque.livres.Dto.LivreDto;
-import com.inetum.AppBibliotheque.livres.Dto.LivreDtoEx;
+import com.inetum.AppBibliotheque.livres.dto.DomaineDto;
+import com.inetum.AppBibliotheque.livres.dto.ExemplaireDto;
+import com.inetum.AppBibliotheque.livres.dto.ExemplaireDtoEx;
+import com.inetum.AppBibliotheque.livres.dto.LivreDto;
+import com.inetum.AppBibliotheque.livres.dto.LivreDtoEx;
 import com.inetum.AppBibliotheque.livres.entities.Domaine;
 import com.inetum.AppBibliotheque.livres.entities.Livre;
 import com.inetum.AppBibliotheque.livres.services.IServiceDomaine;

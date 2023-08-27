@@ -1,17 +1,27 @@
 package com.inetum.AppBibliotheque.livres.init;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
+import com.inetum.AppBibliotheque.emprunts.dao.interfaces.IDaoEmprunt;
+import com.inetum.AppBibliotheque.emprunts.entities.Emprunter;
+import com.inetum.AppBibliotheque.emprunts.entities.Emprunter.TypeEmprunt;
 import com.inetum.AppBibliotheque.livres.dao.interfaces.IDaoDomaine;
 import com.inetum.AppBibliotheque.livres.dao.interfaces.IDaoExemplaire;
 import com.inetum.AppBibliotheque.livres.dao.interfaces.IDaoLivre;
 import com.inetum.AppBibliotheque.livres.entities.Domaine;
 import com.inetum.AppBibliotheque.livres.entities.Exemplaire;
+import com.inetum.AppBibliotheque.livres.entities.Exemplaire.EtatLivre;
 import com.inetum.AppBibliotheque.livres.entities.Livre;
+import com.inetum.AppBibliotheque.personnes.dao.interfaces.IDaoLecteur;
+import com.inetum.AppBibliotheque.personnes.entities.Lecteur;
 
 /**
  * classe utilitaire qui initialise un jeu de données au démarrage de
@@ -24,31 +34,36 @@ import com.inetum.AppBibliotheque.livres.entities.Livre;
 public class InitDataSet {
 
 	@Autowired
-	private IDaoLivre daoLivreJpa;
+	private IDaoLivre daoLivre;
 	@Autowired
 	private IDaoExemplaire daoExemplaire;
 
 	@Autowired
 	private IDaoDomaine daoDomaine;
+	@Autowired
+	private IDaoLecteur daoLecteur;
+	@Autowired
+	//private IDaoEmprunter daoemprunter;
+	private IDaoEmprunt daoEmpruntJpa;
 	
 	
 
 	@PostConstruct
 	public void initData() {
-//		daoLivreJpa.save(new Livre(null,"PHP" , "Victor", "Eni"));
-//    	daoLivreJpa.save(new Livre(null,"Java" , "Romain", "Oracle"));
-//    	daoLivreJpa.save(new Livre(null,"Bases HTML" , "Anouar", "Eyrolles"));
-//    	daoLivreJpa.save(new Livre(null,"Bases HTML" , "Emily", "Eyrolles"));
-//    	daoLivreJpa.save(new Livre(null,"Bases CSS" , "Victor", "Fist"));
-//    	daoLivreJpa.save(new Livre(null,"Bases JPA Hibernete" , "Didier", "m2i"));
-//    	daoLivreJpa.save(new Livre(null,"Bases JPA Hibernete" , "Didier", "First"));
+//		daoLivre.save(new Livre(null,"PHP" , "Victor", "Eni"));
+//    	daoLivre.save(new Livre(null,"Java" , "Romain", "Oracle"));
+//    	daoLivre.save(new Livre(null,"Bases HTML" , "Anouar", "Eyrolles"));
+//    	daoLivre.save(new Livre(null,"Bases HTML" , "Emily", "Eyrolles"));
+//    	daoLivre.save(new Livre(null,"Bases CSS" , "Victor", "Fist"));
+//    	daoLivre.save(new Livre(null,"Bases JPA Hibernete" , "Didier", "m2i"));
+//    	daoLivre.save(new Livre(null,"Bases JPA Hibernete" , "Didier", "First"));
 		
 		// LIVRE1
 
 		Domaine domaine1 = new Domaine(null, "Developpement", "les bases du développemet JAVA");
 		daoDomaine.save(domaine1);
 
-		Livre livre1 = daoLivreJpa.save(new Livre(null, "PHP", "Victor", "Eni", domaine1));
+		Livre livre1 = daoLivre.save(new Livre(null, "PHP", "Victor", "Eni", domaine1));
 
 		// NB EXEMPLAIRE(n,p) = EXEMPLAIRE p du LIVRE n
 
@@ -70,7 +85,7 @@ public class InitDataSet {
 		Domaine domaine2 = new Domaine(null, "Back-end", "les bases d'un bon code");
 		daoDomaine.save(domaine2);
 
-		Livre livre2 = daoLivreJpa.save(new Livre(null, "Java", "Romain", "Oracle", domaine2));
+		Livre livre2 = daoLivre.save(new Livre(null, "Java", "Romain", "Oracle", domaine2));
 		Exemplaire exemplaire21 = daoExemplaire
 				.save(new Exemplaire(null, Exemplaire.EtatLivre.BON_ETAT, "exemlpaire21", livre2));
 		exemplaire21.setIsDisponibilite(true);
@@ -80,7 +95,37 @@ public class InitDataSet {
 				.save(new Exemplaire(null, Exemplaire.EtatLivre.HORS_SERVICE, "exemlpaire22", livre2));
 		exemplaire22.setIsDisponibilite(false);
 		daoExemplaire.save(exemplaire22);
+		
+		Livre livre = daoLivre.save(new Livre(null, "le bon livre", "by me", "the other side", null));
+		Livre livre3 = daoLivre
+					.save(new Livre(null, "the other livre", "by you", "the other side", null));
+		Exemplaire livrePris = daoExemplaire
+					.save(new Exemplaire(null, EtatLivre.BON_ETAT, "exmpl1", livre));
+		Exemplaire livrePris1 = daoExemplaire
+					.save(new Exemplaire(null, EtatLivre.ABIME, "exmpl1", livre2));
+		Lecteur lecteur1 = daoLecteur.save(new Lecteur(null, "Roger", "dupont", null, null, null));
 
+		try {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			Date dateDebut = format.parse("2009-12-02");
+			Date dateFin = format.parse("2009-12-13");
+			daoEmpruntJpa.save(new Emprunter(null, dateDebut, dateFin, TypeEmprunt.RESERVE, lecteur1,
+						livrePris));
+			daoEmpruntJpa.save(new Emprunter(null, dateDebut, dateFin, TypeEmprunt.RESERVE, lecteur1,
+						livrePris1));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+		e.printStackTrace();
+			daoEmpruntJpa.save(
+						new Emprunter(null, null, null, TypeEmprunt.RESERVE, lecteur1, livrePris));
+		}
+
+		Lecteur lecteur2 = daoLecteur.save(new Lecteur(null, "Benoit", "Georges", null, null, null));
+		lecteur2.setNom("Georges");
+		lecteur2.setEmail("b.georges@inetum.com");
 	}
+	
+	
+
 
 }

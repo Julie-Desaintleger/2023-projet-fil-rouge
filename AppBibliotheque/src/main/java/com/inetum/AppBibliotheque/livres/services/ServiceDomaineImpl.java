@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
-import com.inetum.AppBibliotheque.livres.Dto.DomaineDto;
 import com.inetum.AppBibliotheque.livres.dao.interfaces.IDaoDomaine;
+import com.inetum.AppBibliotheque.livres.dto.DomaineDto;
 import com.inetum.AppBibliotheque.livres.entities.Domaine;
 import com.inetum.AppBibliotheque.services.AbstractGenericService;
 

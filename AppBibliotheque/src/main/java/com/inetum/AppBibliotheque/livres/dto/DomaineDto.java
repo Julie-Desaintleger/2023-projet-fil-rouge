@@ -1,4 +1,4 @@
-package com.inetum.AppBibliotheque.livres.Dto;
+package com.inetum.AppBibliotheque.livres.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
