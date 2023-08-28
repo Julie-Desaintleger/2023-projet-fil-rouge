@@ -54,24 +54,36 @@ public class ServiceEmprunterImpl extends AbstractGenericService<Emprunter, Long
 	@Override
 	public EmprunterDtoEx saveOrUpdateEmpruntDtoEx(EmprunterDtoEx emprunterDtoEx) {
 		Emprunter empruntEntity = GenericConverter.map(emprunterDtoEx, Emprunter.class);
-		if(emprunterDtoEx.getIdExemp() !=null && emprunterDtoEx.getIdLecteur() !=null) {
+		if (emprunterDtoEx.getIdExemp() != null && emprunterDtoEx.getIdLecteur() != null) {
 			Exemplaire exemplaireEntity = daoExemplaire.findById(emprunterDtoEx.getIdExemp()).get();
 			empruntEntity.setExemplaireEmprunte(exemplaireEntity);
 			Lecteur LecteurEntity = daoLecteur.findById(emprunterDtoEx.getIdLecteur()).get();
 			empruntEntity.setEmprunteur(LecteurEntity);
-			
 		}
+
 		empruntEntity.setType(Emprunter.TypeEmprunt.valueOf(emprunterDtoEx.getType()));
-		daoEmprunt.save(empruntEntity); 
-		emprunterDtoEx.setId(empruntEntity.getId());
-		return emprunterDtoEx; //on retourne le DtoEx sauvegardé
-		                    //avec la clef primaire éventuellement autoincrémenté
+
+		// AVANT DE CREER UN EMPRUNT, IL FAUT SE RASSURER QUE L'EXEMPLAIRE EST
+		// DISPONIBLE
+		Exemplaire exemplaireEntity = daoExemplaire.findById(emprunterDtoEx.getIdExemp()).get();
+		if (exemplaireEntity.getIsDisponibilite().equals(true)) {
+			// LORSQU'UN EXEMPLAIRE EST EMPRUNTE, ON CHANGE LA VALEUR DE LA
+			// DISPONIBILITE(isDisponobilite =false) DE L'EXEMPLAIRE
+			// PUIS ON ENREGISTRE EN BASE
+			exemplaireEntity.setIsDisponibilite(false);
+			daoExemplaire.save(exemplaireEntity);
+			daoEmprunt.save(empruntEntity);
+
+			emprunterDtoEx.setId(empruntEntity.getId());
+			return emprunterDtoEx; // on retourne le DtoEx sauvegardé
+			// avec la clef primaire éventuellement autoincrémenté
+		}else
+			return null;//A améliorer
 	}
 
 	@Override
 	public List<EmprunterDtoEx> searchAllDtoEx() {
 		return dtoConverter.emprunterToEmprunterDtoEx(searchAll());
 	}
-	
 
 }
