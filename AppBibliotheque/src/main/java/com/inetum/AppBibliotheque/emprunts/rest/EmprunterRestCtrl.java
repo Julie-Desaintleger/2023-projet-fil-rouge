@@ -51,7 +51,7 @@ public class EmprunterRestCtrl {
 	/*********** SAVE */
 
 	@PostMapping("")
-	public EmprunterDto postLivre(@RequestBody EmprunterDtoEx nouvelEmprunt) {
+	public EmprunterDto postEmprunt(@RequestBody EmprunterDtoEx nouvelEmprunt) {
 		return serviceEmprunter.saveOrUpdateEmpruntDtoEx(nouvelEmprunt);
 	}
 
