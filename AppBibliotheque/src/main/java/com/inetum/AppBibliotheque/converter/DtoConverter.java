@@ -36,11 +36,10 @@ public class DtoConverter {
 		livreDto.setDomaine(GenericConverter.map(entity.getDomaine(), DomaineDto.class));
 		return livreDto;
 	}
-	
+
 	public /* static */ List<LivreDtoEx2> LivreToLivreDtoEx2(List<Livre> entityList) {
 		return entityList.stream().map((entity) -> LivreToLivreDtoEx2(entity)).toList();
 	}
-
 
 	public /* static */ LivreDtoEx LivreToLivreDtoEx(Livre entity) {
 		Long idDom = entity.getDomaine() != null ? entity.getDomaine().getId() : null;
@@ -53,8 +52,7 @@ public class DtoConverter {
 	public /* static */ List<LivreDtoEx> LivreToLivreDtoEx(List<Livre> entityList) {
 		return entityList.stream().map((entity) -> LivreToLivreDtoEx(entity)).toList();
 	}
-	
-	
+
 	// EXEMPLAIRES
 
 	public /* static */ ExemplaireDto exemplaireToExemplaireDto(Exemplaire entity) {
@@ -72,6 +70,10 @@ public class DtoConverter {
 		exemplaireDto.setLivre(GenericConverter.map(entity.getLivre(), LivreDto.class));
 		exemplaireDto.setEtat(entity.getEtat().toString());
 		return exemplaireDto;
+	}
+
+	public /* static */ List<ExemplaireDtoEx2> exemplaireToExemplaireDtoEx2(List<Exemplaire> entityList) {
+		return entityList.stream().map((entity) -> exemplaireToExemplaireDtoEx2(entity)).toList();
 	}
 
 	public /* static */ ExemplaireDtoEx exemplaireToExemplaireDtoEx(Exemplaire entity) {

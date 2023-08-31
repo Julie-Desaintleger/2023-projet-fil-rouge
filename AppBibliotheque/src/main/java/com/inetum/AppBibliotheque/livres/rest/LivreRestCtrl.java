@@ -18,6 +18,7 @@ import com.inetum.AppBibliotheque.converter.GenericConverter;
 import com.inetum.AppBibliotheque.livres.dto.DomaineDto;
 import com.inetum.AppBibliotheque.livres.dto.ExemplaireDto;
 import com.inetum.AppBibliotheque.livres.dto.ExemplaireDtoEx;
+import com.inetum.AppBibliotheque.livres.dto.ExemplaireDtoEx2;
 import com.inetum.AppBibliotheque.livres.dto.LivreDto;
 import com.inetum.AppBibliotheque.livres.dto.LivreDtoEx;
 import com.inetum.AppBibliotheque.livres.dto.LivreDtoEx2;
@@ -116,8 +117,8 @@ public class LivreRestCtrl {
 	/************** FIND ALL */
 
 	@GetMapping("exemp")
-	public List<ExemplaireDto> getExemplaire() {
-		return serviceExemplaire.searchAllDto();
+	public List<ExemplaireDtoEx2> getExemplaire() {
+		return serviceExemplaire.searchAllWithAllLivre();
 
 	}
 

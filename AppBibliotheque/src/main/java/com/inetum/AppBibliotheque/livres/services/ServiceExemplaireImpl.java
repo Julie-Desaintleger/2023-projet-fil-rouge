@@ -74,4 +74,9 @@ public class ServiceExemplaireImpl extends AbstractGenericService<Exemplaire, Lo
 		// avec la clef primaire éventuellement autoincrémenté
 	}
 
+	@Override
+	public List<ExemplaireDtoEx2> searchAllWithAllLivre() {
+		return dtoConverter.exemplaireToExemplaireDtoEx2(searchAll());
+	}
+
 }
