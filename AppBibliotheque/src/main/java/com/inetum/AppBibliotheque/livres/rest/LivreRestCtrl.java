@@ -20,6 +20,7 @@ import com.inetum.AppBibliotheque.livres.dto.ExemplaireDto;
 import com.inetum.AppBibliotheque.livres.dto.ExemplaireDtoEx;
 import com.inetum.AppBibliotheque.livres.dto.LivreDto;
 import com.inetum.AppBibliotheque.livres.dto.LivreDtoEx;
+import com.inetum.AppBibliotheque.livres.dto.LivreDtoEx2;
 import com.inetum.AppBibliotheque.livres.entities.Domaine;
 import com.inetum.AppBibliotheque.livres.entities.Livre;
 import com.inetum.AppBibliotheque.livres.services.IServiceDomaine;
@@ -54,8 +55,8 @@ public class LivreRestCtrl {
 
 	/*********** FINDALL */
 	@GetMapping("")
-	public List<LivreDto> getLivres() {
-		return serviceLivre.searchAllDto();
+	public List<LivreDtoEx2> getLivres() {
+		return serviceLivre.searchAlldWithAllDomaine();
 
 	}
 

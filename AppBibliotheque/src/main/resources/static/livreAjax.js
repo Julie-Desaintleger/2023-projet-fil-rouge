@@ -8,12 +8,16 @@ let data = JSON.parse(this.responseText)
 //	console.log(data)
 		let bodyElt = document.getElementById("table_body");
 		bodyElt.innerHTML="";//vider le tableau avant de le re-remplir
-			for(let x of data){
+			for(let livre of data){
 				let row = bodyElt.insertRow(-1);
-				(row.insertCell(0)).innerHTML = x.idLivre;
-				(row.insertCell(1)).innerHTML = x.auteur;
-				(row.insertCell(2)).innerHTML = x.editeur;
-				(row.insertCell(3)).innerHTML = x.titre;
+				(row.insertCell(0)).innerHTML = livre.idLivre;
+				(row.insertCell(1)).innerHTML = livre.auteur;
+				(row.insertCell(2)).innerHTML = livre.editeur;
+				(row.insertCell(3)).innerHTML = livre.titre;
+				(row.insertCell(3)).innerHTML = livre.titre;
+				(row.insertCell(3)).innerHTML = livre.titre;
+				(row.insertCell(3)).innerHTML = livre.titre;
+				(row.insertCell(3)).innerHTML = livre.titre;
 			}
 }
 // Send a request

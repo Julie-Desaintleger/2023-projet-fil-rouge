@@ -64,7 +64,7 @@ public abstract class AbstractGenericService<E, ID, DTO> implements IGenericServ
 	}
 
 	public List<DTO> searchAllDto() {
-		return GenericConverter .map(this.searchAll(), getDtoClass()); // ex: dtoClass = CompteDto.class
+		return GenericConverter.map(this.searchAll(), getDtoClass()); // ex: dtoClass = CompteDto.class
 	}
 
 }

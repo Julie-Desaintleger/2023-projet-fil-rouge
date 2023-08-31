@@ -1,5 +1,7 @@
 package com.inetum.AppBibliotheque.livres.services;
 
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
@@ -62,6 +64,12 @@ public class ServiceLivreImpl extends AbstractGenericService<Livre, Long, LivreD
 				return livreDtoEx; //on retourne le DtoEx sauvegardé
 				                    //avec la clef primaire éventuellement autoincrémenté
 			}
+
+	@Override
+	public List<LivreDtoEx2> searchAlldWithAllDomaine() {
+		return dtoConverter.LivreToLivreDtoEx2(searchAll());
+	
+	}
 	}
 
 	
