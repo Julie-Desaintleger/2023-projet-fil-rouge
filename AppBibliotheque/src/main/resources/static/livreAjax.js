@@ -38,3 +38,6 @@ let data = JSON.parse(this.responseText)
 // Send a request
 xmlhttp.open("GET", "http://localhost:8080/AppBibliotheque/api-livres/livre")
 xmlhttp.send()
+
+
+
