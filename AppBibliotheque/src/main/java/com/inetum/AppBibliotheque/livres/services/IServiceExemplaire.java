@@ -13,6 +13,7 @@ public interface IServiceExemplaire extends IGenericService<Exemplaire, Long, Ex
 	
 	List<Exemplaire> CheckDisponibility(EtatLivre etat);
 	public ExemplaireDtoEx2 searchByIdWithLivre(Long idExemp);
+	public List<ExemplaireDtoEx2> searchAllWithAllLivre();
 	public ExemplaireDtoEx saveOrUpdateExemplaireDtoEx(ExemplaireDtoEx exemplaireDtoEx);
 
 }
