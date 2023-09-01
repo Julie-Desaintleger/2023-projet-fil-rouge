@@ -1,11 +1,14 @@
 package com.inetum.AppBibliotheque.personnes.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +24,8 @@ import com.inetum.AppBibliotheque.personnes.entities.Personne;
 
 /*
  * La classe TestPersonneDao teste l'ensemble du package 
- * com.inetum.AppBibliotheque.personnes.dao.jpa
+ * com.inetum.AppBibliotheque.personnes.dao.interfaces 
+ * qui etends JpaRepository<Entity, PrimaryKey>
  * 
  * Il teste alors le CRUD pour :
  *   - une personne,
@@ -33,7 +37,7 @@ public class TestPersonneDao {
 
 	Logger logger = LoggerFactory.getLogger(TestPersonneDao.class);
 
-	@Autowired // pour initialisation daoCompte
+	@Autowired // pour initialisation daoPersonne
 	// qui va référencer un composant Spring existant compatible
 	// avec l'interface DaoCompte (DaoCompteJpa avec@Repository)
 	private IDaoPersonne daoPersonneJpa;
@@ -44,14 +48,22 @@ public class TestPersonneDao {
 	@Autowired
 	private IDaoLecteur daoLecteurJpa;
 
+	// pour la cohérence des resultats
+	// TODO Ajouter une methode pour avant tous les tests clean la bdd
+
+	@BeforeEach
+	public void init() {
+		daoPersonneJpa.deleteAll();
+	}
+
 	@Test
 	public void testPersonnesAdminLecteur() {
 		daoPersonneJpa.save(new Personne(null, "Jean", "Valjean", "jean@inetum.com", "0102030405",
 					"rue de la maison"));
 		daoPersonneJpa.save(new Personne(null, "Gerard", "Duchemin", "gerard@inetum.com", "0102030405",
 					"rue de la maison"));
-		daoAdministrateurJpa.save(new Administrateur(null, "Roger", "Theboss", "roger@biblio.com",
-					null, null, "rogeradmin", "1234"));
+		daoAdministrateurJpa.save(new Administrateur(null, "Roger", "Theboss", "roger@biblio.com", null,
+					null, "rogeradmin", "1234"));
 		daoLecteurJpa.save(new Lecteur(null, "Benoit", "Georges", null, null, null));
 
 		List<Personne> personnes = daoPersonneJpa.findAll();
@@ -190,6 +202,45 @@ public class TestPersonneDao {
 		Lecteur LecteuridDeleted = daoLecteurJpa.findById(id).orElse(null);
 		assertNull(LecteuridDeleted);
 		logger.trace("idDeleted=" + LecteuridDeleted);
+	}
+
+	@Test
+	public void testRechercheByEmail() {
+		Personne person = daoPersonneJpa.save(new Personne(null, "Jean", "Valjean", "jean@inetum.com",
+					"0102030405", "rue de la maison"));
+		logger.trace("person=" + person);
+		Personne personToCheck = daoPersonneJpa.findByEmail("jean@inetum.com");
+		assertTrue(person.getEmail().equals(personToCheck.getEmail()));
+	}
+
+	@Test
+	public void testRechercheByNom() {
+		Personne personne1 = daoPersonneJpa.save(new Personne(null, "Jean", "Valjean", "jean@inetum.com",
+					"0102030405", "rue de la maison"));
+		Personne personne2 = daoPersonneJpa.save(new Personne(null, "Gerard", "Valjean",
+					"gerard@inetum.com", "0102030405", "rue de la maison"));
+
+		List<Personne> personnesParNom = daoPersonneJpa.findByNom("Valjean");
+		assertEquals(2, personnesParNom.size());
+		assertTrue(personne1.getNom().equals(personne2.getNom()));
+		assertFalse(personne1.equals(personne2));
+	}
+
+	@Test
+	public void testRechercheByNomAndPnom() {
+		Personne personne1 = daoPersonneJpa.save(new Personne(null, "Jean", "Valjean", "jean@inetum.com",
+					"010000000", "rue du chateau"));
+		Personne personne2 = daoPersonneJpa.save(new Personne(null, "Jean", "Valjean",
+					"jean.v@inetum.com", "0102030405", "rue de la maison"));
+		Personne personne3 = daoPersonneJpa.save(new Personne(null, "Maurice", "Valjean",
+					"jean.v@inetum.com", "0102030405", "rue de la maison"));
+
+		List<Personne> personnesParNomAndPrenom = daoPersonneJpa.findByNomAndPrenom("Valjean", "Jean");
+		List<Personne> personnes = daoPersonneJpa.findAll();
+		assertEquals(2, personnesParNomAndPrenom.size());
+		assertNotEquals(personnes.size(), personnesParNomAndPrenom.size());
+		assertTrue(personne1.getNom().equals(personne2.getNom()));
+		assertFalse(personne1.equals(personne2));
 	}
 
 }

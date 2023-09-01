@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inetum.AppBibliotheque.personnes.dao.interfaces.IDaoPersonne;
+import com.inetum.AppBibliotheque.converter.DtoConverter;
 import com.inetum.AppBibliotheque.personnes.entities.Personne;
+import com.inetum.AppBibliotheque.personnes.services.IServicePersonne;
 
 @RestController
 @RequestMapping(value = "/api-personnes/personne", headers = "Accept=application/json")
@@ -24,12 +25,14 @@ public class PersonneRestCtrl {
 	// NB: cette version 1 n'utilise pas encore les DTOs
 
 	@Autowired
-	private IDaoPersonne daoPersonneJpa;
+	private IServicePersonne servicePersonne;
+
+	private DtoConverter dtoConverter;
 
 	// exemple URL de déclenchement: ./api-personnes/personne/1
 	@GetMapping("/{idPersonne}")
 	public ResponseEntity<?> getPersonneById(@PathVariable("idPersonne") Long idPersonne) {
-		Personne personne = daoPersonneJpa.findById(idPersonne).orElse(null);
+		Personne personne = servicePersonne.rechercherPersonneParNumero(idPersonne);
 		if (personne != null) {
 			return new ResponseEntity<Personne>(personne, HttpStatus.OK);
 		} else {
@@ -43,7 +46,7 @@ public class PersonneRestCtrl {
 	// ./api-personnes/personne
 	@GetMapping("")
 	public List<Personne> getPersonnes() {
-		return daoPersonneJpa.findAll();
+		return servicePersonne.rechercherPersonnes();
 
 	}
 
@@ -54,7 +57,7 @@ public class PersonneRestCtrl {
 	// "toto@mail.com", "telephone" : "0102030405" , "adresse" : "chez moi"}
 	@PostMapping("")
 	public Personne postPersonne(@RequestBody Personne newPersonne) {
-		Personne personneSaved = daoPersonneJpa.save(newPersonne);
+		Personne personneSaved = servicePersonne.enregistrerPersonne(newPersonne);
 		return personneSaved; // on retourne la personne avec la clé primaire auto-incr
 	}
 
@@ -70,7 +73,7 @@ public class PersonneRestCtrl {
 		Long numPersonneToUpdate = idPersonne != null ? idPersonne : personne.getIdPersonne();
 
 		Personne personneExistante = numPersonneToUpdate != null
-					? daoPersonneJpa.findById(numPersonneToUpdate).orElse(null)
+					? servicePersonne.rechercherPersonneParNumero(numPersonneToUpdate)
 					: null;
 		if (personneExistante == null) {
 			return new ResponseEntity<String>("{ \"err\" : \"personne not found\"}",
@@ -79,7 +82,7 @@ public class PersonneRestCtrl {
 			if (personne.getIdPersonne() == null) {
 				personne.setIdPersonne(numPersonneToUpdate);
 			}
-			daoPersonneJpa.save(personne);
+			servicePersonne.enregistrerPersonne(personne);
 			return new ResponseEntity<Personne>(personne, HttpStatus.OK);
 		}
 
@@ -88,9 +91,9 @@ public class PersonneRestCtrl {
 	// exemple URL de déclenchement: ./api-personnes/personne/1
 	@DeleteMapping("/{idPersonne}")
 	public ResponseEntity<?> deleteCompteById(@PathVariable("idPersonne") Long idPersonne) {
-		Personne personneAsupprimer = daoPersonneJpa.findById(idPersonne).orElse(null);
+		Personne personneAsupprimer = servicePersonne.rechercherPersonneParNumero(idPersonne);
 		if (personneAsupprimer != null) {
-			daoPersonneJpa.deleteById(idPersonne);
+			servicePersonne.deleteById(idPersonne);
 			return new ResponseEntity<String>("{ \"done\" : \"personne deleted\"}", HttpStatus.OK);
 		} else {
 			return new ResponseEntity<String>("{ \"err\" : \"personne not found\"}",
