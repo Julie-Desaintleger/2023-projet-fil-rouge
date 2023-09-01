@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<title>Formulaire de reservation </title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="livreAjax.js"></script>
+</head>
+<body>
+	<form>
+	<div class="form-group">
+	<label for="idexemp">Id exemplaire :</label>
+	<input type="number" id="idexemp"  class="form-control" >
+	</div>
+	<div class="form-group">
+	<label for="datedebut">date de debut:</label>
+	<input type="date" id="datedebut" class="form-control" placeholder="Enter la date de début">
+	</div>
+	<div class="form-group">
+	<label for="datefin">date de fin:</label>
+	<input type="date" id="datefin" class="form-control" placeholder="Enter la date de fin">
+	</div>
+	<div class="form-group">
+	<label for="idlecteur">id du lecteur:</label>
+	<input type="number"  id="idlecteur" class="form-control" placeholder="Enter id du lecteur">
+	</div>
+	<div class="form-group">
+	<label for="reservationType">Type de reservation:</label>
+	<select name="reservationtype" id="reservationType">
+	  <option value="">--selectionner un type de reservation--</option>
+	  <option value="EFFECTIF">EFFECTIF</option>
+	  <option value="RESERVE">RESERVE</option>
+	</select>	
+</div>
+	<button type="submit" id="valider-btn" class="btn btn-primary">Valider</button>
+	</form>
+
+	<script>
+		
+
+
+        // Function to extract parameter from URL
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+
+        // Get idExemp parameter from URL
+        var idExemp = getParameterByName('id');
+        if (idExemp !== null) {
+            document.getElementById("idexemp").value = idExemp;
+        }
+        console.log(idExemp);
+        
+                // Get isDisponibilite parameter from URL
+        var isDisponibilite = getParameterByName('disponibilite');
+        console.log(isDisponibilite);
+       	if (isDisponibilite == true) {
+	
+			function reserver() {
+			
+				const id = null;
+				var idExemp = parseInt(document.getElementById("idexemp").value);
+				var datedebut = document.getElementById("datedebut").value;
+				var datefin = document.getElementById("datefin").value;
+				var idlecteur = parseInt(document.getElementById("idlecteur").value);
+				var reservationType = document.getElementById("reservationType").value;
+				
+				console.log("////////////////////" + isDisponibilite);
+				var formData = JSON.stringify({
+						"id": id,
+						"dateDebut": datedebut,
+						"dateFin": datefin,
+						"type": reservationType,
+						"idExemp": idExemp,
+						"idLecteur": idlecteur,
+					});
+				console.log(formData);
+				
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.withCredentials = true;
+				xmlhttp.addEventListener("readystatechange", function() {
+					if (this.readyState === 4) {
+						console.log(this.responseText);
+					}
+				});
+				xmlhttp.open("POST", "http://localhost:8080/AppBibliotheque/api-emprunts/emprunt");
+				xmlhttp.setRequestHeader("Content-Type", "application/json");
+				xmlhttp.send(formData);
+			}
+		}
+		else {
+		alert("Exemplaire choisi n'est pas disponible!  Veuillez vérifier la disponibilité de l'exemplaire");
+		
+		setTimeout(function(){ window.location = 'exemplaireAjax.html'; }, 0000);
+		}
+
+       // liaison du boutton valider à la fonction reserver
+        document.addEventListener("DOMContentLoaded", function() {
+        var validerButton = document.getElementById("valider-btn");
+        validerButton.addEventListener("click", function(event) {
+            event.preventDefault(); 
+            reserver(); 
+        });
+    });
+    </script>
+</body>
+</html>
+
+

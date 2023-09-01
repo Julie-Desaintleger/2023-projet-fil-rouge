@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inetum.AppBibliotheque.emprunts.dto.EmprunterDto;
@@ -21,7 +23,7 @@ import com.inetum.AppBibliotheque.emprunts.services.IServiceEmprunter;
 
 @RestController
 @RequestMapping(value = "/api-emprunts/emprunt", headers = "Accept=application/json")
-
+@CrossOrigin(origins = "*" , methods = { RequestMethod.GET , RequestMethod.POST})
 public class EmprunterRestCtrl {
 
 	@Autowired
@@ -51,8 +53,13 @@ public class EmprunterRestCtrl {
 	/*********** SAVE */
 
 	@PostMapping("")
-	public EmprunterDto postEmprunt(@RequestBody EmprunterDtoEx nouvelEmprunt) {
-		return serviceEmprunter.saveOrUpdateEmpruntDtoEx(nouvelEmprunt);
+	public ResponseEntity<?> /*EmprunterDto*/ postEmprunt(@RequestBody EmprunterDtoEx nouvelEmprunt) {
+		if(serviceEmprunter.saveOrUpdateEmpruntDtoEx(nouvelEmprunt) == null) {
+			return new ResponseEntity<String>("{ \"err\" : \"Exemplaire non disponible\"}", HttpStatus.NOT_FOUND); 
+		}
+		else {
+			return new ResponseEntity<EmprunterDto> (serviceEmprunter.saveOrUpdateEmpruntDtoEx(nouvelEmprunt),HttpStatus.OK);
+		}
 	}
 
 	/********** UPDATE **/
