@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inetum.AppBibliotheque.converter.DtoConverter;
+import com.inetum.AppBibliotheque.personnes.dto.PersonneDto;
 import com.inetum.AppBibliotheque.personnes.entities.Personne;
 import com.inetum.AppBibliotheque.personnes.services.IServicePersonne;
 
@@ -22,19 +22,15 @@ import com.inetum.AppBibliotheque.personnes.services.IServicePersonne;
 @RequestMapping(value = "/api-personnes/personne", headers = "Accept=application/json")
 public class PersonneRestCtrl {
 
-	// NB: cette version 1 n'utilise pas encore les DTOs
-
 	@Autowired
 	private IServicePersonne servicePersonne;
-
-	private DtoConverter dtoConverter;
 
 	// exemple URL de déclenchement: ./api-personnes/personne/1
 	@GetMapping("/{idPersonne}")
 	public ResponseEntity<?> getPersonneById(@PathVariable("idPersonne") Long idPersonne) {
-		Personne personne = servicePersonne.rechercherPersonneParNumero(idPersonne);
-		if (personne != null) {
-			return new ResponseEntity<Personne>(personne, HttpStatus.OK);
+		PersonneDto personneDto = servicePersonne.searchDtoById(idPersonne);
+		if (personneDto != null) {
+			return new ResponseEntity<PersonneDto>(personneDto, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<String>("{ \"err\" : \"personne not found\"}",
 						HttpStatus.NOT_FOUND);
@@ -45,8 +41,8 @@ public class PersonneRestCtrl {
 	// exemple de fin d'URL de déclenchement:
 	// ./api-personnes/personne
 	@GetMapping("")
-	public List<Personne> getPersonnes() {
-		return servicePersonne.rechercherPersonnes();
+	public List<PersonneDto> getPersonnes() {
+		return servicePersonne.searchAllDto();
 
 	}
 
@@ -56,9 +52,8 @@ public class PersonneRestCtrl {
 	// { "idPersonne" : null, "prenom" : "Toto", "nom" : "Durand", "email" :
 	// "toto@mail.com", "telephone" : "0102030405" , "adresse" : "chez moi"}
 	@PostMapping("")
-	public Personne postPersonne(@RequestBody Personne newPersonne) {
-		Personne personneSaved = servicePersonne.enregistrerPersonne(newPersonne);
-		return personneSaved; // on retourne la personne avec la clé primaire auto-incr
+	public PersonneDto postPersonne(@RequestBody PersonneDto newPersonne) {
+		return servicePersonne.saveOrUpdateDto(newPersonne);
 	}
 
 	// exemple de fin d'URL de déclenchement:
@@ -67,13 +62,13 @@ public class PersonneRestCtrl {
 	// { "idPersonne" : null, "prenom" : "Toto", "nom" : "Durand", "email" :
 	// "toto@mail.com", "telephone" : "0102030405" , "adresse" : "chez moi"}
 	@PutMapping({ "", "/{idPersonne}" })
-	public ResponseEntity<?> putPersonneToUpdate(@RequestBody Personne personne,
+	public ResponseEntity<?> putPersonneToUpdate(@RequestBody PersonneDto personne,
 				@PathVariable(value = "idPersonne", required = false) Long idPersonne) {
 
 		Long numPersonneToUpdate = idPersonne != null ? idPersonne : personne.getIdPersonne();
 
-		Personne personneExistante = numPersonneToUpdate != null
-					? servicePersonne.rechercherPersonneParNumero(numPersonneToUpdate)
+		PersonneDto personneExistante = numPersonneToUpdate != null
+					? servicePersonne.searchDtoById(numPersonneToUpdate)
 					: null;
 		if (personneExistante == null) {
 			return new ResponseEntity<String>("{ \"err\" : \"personne not found\"}",
@@ -82,8 +77,8 @@ public class PersonneRestCtrl {
 			if (personne.getIdPersonne() == null) {
 				personne.setIdPersonne(numPersonneToUpdate);
 			}
-			servicePersonne.enregistrerPersonne(personne);
-			return new ResponseEntity<Personne>(personne, HttpStatus.OK);
+			servicePersonne.saveOrUpdateDto(personne);
+			return new ResponseEntity<PersonneDto>(personne, HttpStatus.OK);
 		}
 
 	}
@@ -91,7 +86,7 @@ public class PersonneRestCtrl {
 	// exemple URL de déclenchement: ./api-personnes/personne/1
 	@DeleteMapping("/{idPersonne}")
 	public ResponseEntity<?> deleteCompteById(@PathVariable("idPersonne") Long idPersonne) {
-		Personne personneAsupprimer = servicePersonne.rechercherPersonneParNumero(idPersonne);
+		Personne personneAsupprimer = servicePersonne.searchById(idPersonne);
 		if (personneAsupprimer != null) {
 			servicePersonne.deleteById(idPersonne);
 			return new ResponseEntity<String>("{ \"done\" : \"personne deleted\"}", HttpStatus.OK);
