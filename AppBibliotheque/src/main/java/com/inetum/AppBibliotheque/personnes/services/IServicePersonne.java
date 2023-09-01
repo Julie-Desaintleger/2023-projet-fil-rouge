@@ -8,20 +8,12 @@ import com.inetum.AppBibliotheque.services.IGenericService;
 
 public interface IServicePersonne extends IGenericService<Personne, Long, PersonneDto> {
 
-	Personne rechercherPersonneParNumero(long numeroPersonne);
-
 	Personne rechercherPersonneParEmail(String email);
 
 	List<Personne> rechercherPersonneParNom(String nom);
 
 	List<Personne> rechercherPersonneParNomEtPrenom(String nom, String prenom);
 
-	List<Personne> rechercherPersonnes();
-
-	boolean verifierExistancePersonne(long numeroPersonne);
-
-	Personne enregistrerPersonne(Personne personne);
-
-	void supprimerPersonne(Personne personne);
+	PersonneDto saveOrUpdateDto(PersonneDto personneDto);
 
 }

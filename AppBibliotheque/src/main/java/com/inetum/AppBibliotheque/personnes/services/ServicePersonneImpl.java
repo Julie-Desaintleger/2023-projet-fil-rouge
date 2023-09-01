@@ -9,6 +9,8 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.inetum.AppBibliotheque.converter.DtoConverter;
+import com.inetum.AppBibliotheque.converter.GenericConverter;
 import com.inetum.AppBibliotheque.personnes.dao.interfaces.IDaoPersonne;
 import com.inetum.AppBibliotheque.personnes.dto.PersonneDto;
 import com.inetum.AppBibliotheque.personnes.entities.Personne;
@@ -26,17 +28,14 @@ public class ServicePersonneImpl extends AbstractGenericService<Personne, Long, 
 
 	Logger logger = LoggerFactory.getLogger(ServicePersonneImpl.class);
 
+	private DtoConverter dtoConverter = new DtoConverter();
+
 	@Autowired
 	private IDaoPersonne daoPersonne; // dao principal
 
 	@Override
 	public CrudRepository<Personne, Long> getdao() {
 		return this.daoPersonne;
-	}
-
-	@Override
-	public Personne rechercherPersonneParNumero(long numeroPersonne) {
-		return daoPersonne.findById(numeroPersonne).orElseGet(null);
 	}
 
 	@Override
@@ -55,23 +54,8 @@ public class ServicePersonneImpl extends AbstractGenericService<Personne, Long, 
 	}
 
 	@Override
-	public List<Personne> rechercherPersonnes() {
-		return daoPersonne.findAll();
+	public PersonneDto saveOrUpdateDto(PersonneDto personneDto) {
+		Personne personneToSaveOrUpdate = dtoConverter.personneDtoToPersonne(personneDto);
+		return GenericConverter.map(this.saveOrUpdate(personneToSaveOrUpdate), getDtoClass());
 	}
-
-	@Override
-	public boolean verifierExistancePersonne(long numeroPersonne) {
-		return daoPersonne.existsById(numeroPersonne);
-	}
-
-	@Override
-	public Personne enregistrerPersonne(Personne personne) {
-		return daoPersonne.save(personne);
-	}
-
-	@Override
-	public void supprimerPersonne(Personne personne) {
-		daoPersonne.delete(personne);
-	}
-
 }
