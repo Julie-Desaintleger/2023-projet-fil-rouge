@@ -95,11 +95,13 @@
 				xmlhttp.open("POST", "http://localhost:8080/AppBibliotheque/api-emprunts/emprunt");
 				xmlhttp.setRequestHeader("Content-Type", "application/json");
 				xmlhttp.send(formData);
-			}
+				
+				alert("Exemplaire est reservé avec succes. A rendre le : " + datefin );
+				setTimeout(function(){ window.location = 'exemplaireAjax.html'; }, 0000);
+				}
 		}
 		else {
 		alert("Exemplaire choisi n'est pas disponible!  Veuillez vérifier la disponibilité de l'exemplaire");
-		
 		setTimeout(function(){ window.location = 'exemplaireAjax.html'; }, 0000);
 		}
 
