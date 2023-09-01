@@ -41,7 +41,7 @@ function exemplaire() {
 			(row.insertCell(2)).innerHTML = exemp.etat;
 			(row.insertCell(3)).innerHTML = exemp.isDisponibilite;
 			let link = document.createElement("a");
-			link.href = "formulaireReservation.html?id=" + exemp.idExemp + "&disponibilite=" + exemp.isDisponibilite;
+			link.href = "formulaireReservation.html?id=" + exemp.idExemp + "&disponibilite=" + (exemp.isDisponibilite ? 'succes' : 'echec' );
 			let reserverButton = document.createElement("button");
 			reserverButton.textContent = "Reserver";
 			link.appendChild(reserverButton);
