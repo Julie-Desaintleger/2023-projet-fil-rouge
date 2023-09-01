@@ -7,6 +7,7 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="livreAjax.js"></script>
+<script src="my_ajax_util.js"></script>
 </head>
 <body>
 	<form>
@@ -37,10 +38,8 @@
 	<button type="submit" id="valider-btn" class="btn btn-primary">Valider</button>
 	</form>
 
-	<script>
+	<script >
 		
-
-
         // Function to extract parameter from URL
         function getParameterByName(name, url) {
             if (!url) url = window.location.href;
@@ -73,8 +72,9 @@
 				var datefin = document.getElementById("datefin").value;
 				var idlecteur = parseInt(document.getElementById("idlecteur").value);
 				var reservationType = document.getElementById("reservationType").value;
-				
+						
 				console.log("////////////////////" + isDisponibilite);
+	
 				var formData = JSON.stringify({
 						"id": id,
 						"dateDebut": datedebut,
@@ -83,8 +83,10 @@
 						"idExemp": idExemp,
 						"idLecteur": idlecteur,
 					});
+				console.log("////////////////////" + differenceEntreDeuxDates(datedebut, datefin));
 				console.log(formData);
-				
+				if( differenceEntreDeuxDates(datedebut, datefin)>=1 && differenceEntreDeuxDates(datedebut, datefin)<=30){
+
 				var xmlhttp = new XMLHttpRequest();
 				xmlhttp.withCredentials = true;
 				xmlhttp.addEventListener("readystatechange", function() {
@@ -99,8 +101,12 @@
 				alert("Exemplaire est reservé avec succes. A rendre le : " + datefin );
 				setTimeout(function(){ window.location = 'exemplaireAjax.html'; }, 0000);
 				}
+				else {
+					alert("Veuillez choisir une date de fin anterieure à la date de début !" );
+				} 
+				}
 		}
-		else {
+		if(isDisponibilite == "echec") {
 		alert("Exemplaire choisi n'est pas disponible!  Veuillez vérifier la disponibilité de l'exemplaire");
 		setTimeout(function(){ window.location = 'exemplaireAjax.html'; }, 0000);
 		}

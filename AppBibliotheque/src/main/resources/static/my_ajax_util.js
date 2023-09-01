@@ -36,3 +36,18 @@ function makeAjaxPutRequest(url, jsonData, callback, errCallback) {
 	xhr.setRequestHeader("Content-Type", "application/json");
 	xhr.send(jsonData);
 }
+
+
+function differenceEntreDeuxDates(date1, date2) {
+	// Convertir les dates en objets Date si elles ne le sont pas déjà
+	if (!(date1 instanceof Date)) {
+		date1 = new Date(date1);
+	}
+	if (!(date2 instanceof Date)) {
+		date2 = new Date(date2);
+	}
+	//const differenceEnMillisecondes = Math.abs(date1 - date2);
+	const differenceEnMillisecondes = date2 - date1;
+	const differenceEnJours = differenceEnMillisecondes / (1000 * 60 * 60 * 24);
+	return differenceEnJours;
+}
