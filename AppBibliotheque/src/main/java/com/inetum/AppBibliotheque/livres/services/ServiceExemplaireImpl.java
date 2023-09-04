@@ -79,4 +79,9 @@ public class ServiceExemplaireImpl extends AbstractGenericService<Exemplaire, Lo
 		return dtoConverter.exemplaireToExemplaireDtoEx2(searchAll());
 	}
 
+	@Override
+	public List<ExemplaireDtoEx2> findByBookTitle(String titre) {
+		return dtoConverter.exemplaireToExemplaireDtoEx2(daoExemplaire.findByLivreTitre(titre)) ;
+	}
+
 }

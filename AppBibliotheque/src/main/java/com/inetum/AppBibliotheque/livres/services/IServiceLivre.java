@@ -13,6 +13,6 @@ public interface IServiceLivre extends IGenericService<Livre, Long, LivreDto> {
 	public LivreDtoEx2 searchByIdWithDomaine(Long idLivre);
 	public List<LivreDtoEx2> searchAlldWithAllDomaine();
 	public LivreDtoEx saveOrUpdateLivreDtoEx(LivreDtoEx livreDtoEx);
-	public Livre searchByTitle(String titre);
+	public LivreDtoEx2 searchByTitle(String titre);
  
 }
