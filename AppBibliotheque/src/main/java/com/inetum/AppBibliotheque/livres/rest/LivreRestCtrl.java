@@ -23,6 +23,7 @@ import com.inetum.AppBibliotheque.livres.dto.LivreDto;
 import com.inetum.AppBibliotheque.livres.dto.LivreDtoEx;
 import com.inetum.AppBibliotheque.livres.dto.LivreDtoEx2;
 import com.inetum.AppBibliotheque.livres.entities.Domaine;
+import com.inetum.AppBibliotheque.livres.entities.Exemplaire;
 import com.inetum.AppBibliotheque.livres.entities.Livre;
 import com.inetum.AppBibliotheque.livres.services.IServiceDomaine;
 import com.inetum.AppBibliotheque.livres.services.IServiceExemplaire;
@@ -149,6 +150,22 @@ public class LivreRestCtrl {
 		return new ResponseEntity<ExemplaireDto>(exemplaireDto, HttpStatus.OK);
 	}
 
+	/********** DELETE **/
+
+	@DeleteMapping("/exemplaire/{idExemp}")
+	public ResponseEntity<?> deleteExemplaireById(@PathVariable("idExemp") Long idExemp) {
+		Exemplaire exemplaireAsupprimer = serviceExemplaire.searchById(idExemp);
+		if (exemplaireAsupprimer == null)
+			return new ResponseEntity<String>("{ \"err\" : \"exemplaire not found\"}", HttpStatus.NOT_FOUND); // NOT_FOUND
+																											// code http
+		else
+			serviceExemplaire.deleteById(idExemp);
+		return new ResponseEntity<String>("{ \"done\" : \"exemplaire deleted\"}", HttpStatus.OK);
+
+	}
+	
+	
+	
 	
 	// ----------DOMAINE------
 	/**************** SAVE **/

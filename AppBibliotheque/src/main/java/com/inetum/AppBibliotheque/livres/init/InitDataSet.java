@@ -96,13 +96,10 @@ public class InitDataSet {
 		exemplaire22.setIsDisponibilite(false);
 		daoExemplaire.save(exemplaire22);
 		
-		Livre livre = daoLivre.save(new Livre(null, "le bon livre", "by me", "the other side", null));
-		Livre livre3 = daoLivre
-					.save(new Livre(null, "the other livre", "by you", "the other side", null));
-		Exemplaire livrePris = daoExemplaire
-					.save(new Exemplaire(null, EtatLivre.BON_ETAT, "exmpl1", livre));
-		Exemplaire livrePris1 = daoExemplaire
-					.save(new Exemplaire(null, EtatLivre.ABIME, "exmpl1", livre2));
+		
+		Livre livre3 = daoLivre.save(new Livre(null, "the other livre", "by you", "the other side", domaine2));
+		Exemplaire exemplaire31 = daoExemplaire.save(new Exemplaire(null, EtatLivre.BON_ETAT, "exemplaire31", livre3));
+		Exemplaire exemplaire32 = daoExemplaire.save(new Exemplaire(null, EtatLivre.ABIME, "exemplaire32", livre3));
 		Lecteur lecteur1 = daoLecteur.save(new Lecteur(null, "Roger", "dupont", null, null, null));
 
 		try {
@@ -110,14 +107,14 @@ public class InitDataSet {
 			Date dateDebut = format.parse("2009-12-02");
 			Date dateFin = format.parse("2009-12-13");
 			daoEmpruntJpa.save(new Emprunter(null, dateDebut, dateFin, TypeEmprunt.RESERVE, lecteur1,
-						livrePris));
+					exemplaire31));
 			daoEmpruntJpa.save(new Emprunter(null, dateDebut, dateFin, TypeEmprunt.RESERVE, lecteur1,
-						livrePris1));
+					exemplaire32));
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 		e.printStackTrace();
 			daoEmpruntJpa.save(
-						new Emprunter(null, null, null, TypeEmprunt.RESERVE, lecteur1, livrePris));
+						new Emprunter(null, null, null, TypeEmprunt.RESERVE, lecteur1, exemplaire31));
 		}
 
 		Lecteur lecteur2 = daoLecteur.save(new Lecteur(null, "Benoit", "Georges", null, null, null));

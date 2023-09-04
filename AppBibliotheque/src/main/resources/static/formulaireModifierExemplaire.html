@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<title>Formulaire de reservation </title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="livreAjax.js"></script>
+<script src="my_ajax_util.js"></script>
+</head>
+<body>
+	<form>
+	<div class="form-group">
+	<label for="idexemp">Id exemplaire :</label>
+	<input type="number" id="idexemp" class="form-control">
+	</div>
+	</br>
+	
+	<div class="form-group">
+	<label for="etat">Etat :</label>
+	<select name="etat" id="etat">
+	  <option value="BON_ETAT">BON_ETAT</option>
+	  <option value="ABIME">ABIME</option>
+	   <option value="HORS_SERVICE">HORS_SERVICE</option>
+	</select>	
+	</div>
+	</br>
+	<div class="form-group">
+	<label for="disponibilite">Disponibilté  :</label>
+	<select name="disponibilite" id="disponibilite">
+	  <option value="true">Disponible</option>
+	  <option value="false">Indisponible</option>
+	</select>	
+	</div>
+	</br>
+	<div class="form-group">
+	<label for="label">Label :</label>
+	<input type="text" id="label" class="form-control" placeholder="Enter le label de l'exemplaire" >
+	</div>
+	</br>
+	<div class="form-group">
+	<label for="idlivre">Id livre :</label>
+	<input type="number" id="idlivre"  class="form-control">
+	</div>
+	</br>
+	<button type="submit" id="modifier-btn" class="btn btn-primary">Valider</button>
+	</form>
+
+	<script >
+		
+				
+        // Function to extract parameter from URL
+        function getParameterByName(name, url) {
+            if (!url) url = window.location.href;
+            name = name.replace(/[\[\]]/g, '\\$&');
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
+        
+        
+        // Get idExemp parameter from URL
+        var idExemp = getParameterByName('id');
+        if (idExemp !== null) {
+            document.getElementById("idexemp").value = idExemp;
+        }
+        console.log(idExemp);
+        
+          // Get etat parameter from URL
+        var etat = getParameterByName('etat');
+            document.getElementById("etat").value = etat;      
+        console.log(etat);
+        
+        // Get Disponibilite parameter from URL
+        var disponibilite = getParameterByName('disponibilite');
+         console.log("xxxxxxxxxxx " +disponibilite);
+         document.getElementById("disponibilite").value = disponibilite;  
+         console.log(disponibilite);
+         
+     	// Get label parameter from URL
+        var label = getParameterByName('label');
+            document.getElementById("label").value = label;
+        	console.log(label);
+
+       // Get idlivre parameter from URL
+        var idlivre = getParameterByName('idLivre');
+        if (idlivre !== null) {
+            document.getElementById("idlivre").value = idlivre;
+        }
+        console.log(idlivre);
+        
+	function modifierExemplaire() {
+		
+			
+		var idExemp = parseInt(document.getElementById("idexemp").value);			
+		var etat = document.getElementById("etat").value;
+		var isDisponibilite = document.getElementById("disponibilite").value;
+		var label = document.getElementById("label").value;		
+		var idLiv = parseInt(document.getElementById("idlivre").value);
+
+						
+		if (label && idLiv){
+				var formData = JSON.stringify({
+						"idExemp": idExemp,
+						"etat": etat,
+						"isDisponibilite": isDisponibilite,
+						"label": label,
+						"idLiv": idLiv
+					});
+				console.log(formData);
+			
+				var xmlhttp = new XMLHttpRequest();
+				xmlhttp.withCredentials = true;
+				xmlhttp.addEventListener("readystatechange", function() {
+					if (this.readyState === 4) {
+						console.log(this.responseText);
+					}
+				});
+				xmlhttp.open("PUT", "http://localhost:8080/AppBibliotheque/api-livres/livre/exemplaire");
+				xmlhttp.setRequestHeader("Content-Type", "application/json");
+				xmlhttp.send(formData);
+				alert("Exemplaire mis à jour avec succes ");
+				setTimeout(function(){ window.location = 'exemplaireAjaxAdmin.html'; }, 0000);
+			}
+			else{
+				 alert("Veuillez remplir tous les champs!");
+			}
+			
+			
+
+
+   	}
+       // liaison du boutton ajouter à la fonction ajouterLivre()
+        document.addEventListener("DOMContentLoaded", function() {
+        var validerButton = document.getElementById("modifier-btn");
+        validerButton.addEventListener("click", function(event) {
+            event.preventDefault(); 
+            modifierExemplaire(); 
+        });
+    });
+    </script>
+</body>
+</html>
+
+
