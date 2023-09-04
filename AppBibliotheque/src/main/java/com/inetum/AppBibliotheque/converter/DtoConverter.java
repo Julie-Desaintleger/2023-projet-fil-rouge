@@ -19,6 +19,7 @@ import com.inetum.AppBibliotheque.livres.entities.Exemplaire;
 import com.inetum.AppBibliotheque.livres.entities.Livre;
 import com.inetum.AppBibliotheque.personnes.dto.LecteurDto;
 import com.inetum.AppBibliotheque.personnes.dto.PersonneDto;
+import com.inetum.AppBibliotheque.personnes.entities.Lecteur;
 import com.inetum.AppBibliotheque.personnes.entities.Personne;
 
 public class DtoConverter {
@@ -133,6 +134,7 @@ public class DtoConverter {
 
 	// Personnes -------------------------------------
 
+	// Personne
 	public PersonneDto personneToPersonneDto(Personne entity) {
 		return new PersonneDto(entity.getIdPersonne(), entity.getPrenom(), entity.getNom(),
 					entity.getEmail(), entity.getTelephone(), entity.getAdresse());
@@ -145,6 +147,21 @@ public class DtoConverter {
 
 	public List<PersonneDto> personneToPersonneDto(List<Personne> entityList) {
 		return entityList.stream().map(e -> personneToPersonneDto(e)).toList();
+	}
+
+	// Lecteur
+	public LecteurDto lecteurToLecteurDto(Lecteur entity) {
+		return new LecteurDto(entity.getIdPersonne(), entity.getPrenom(), entity.getNom(),
+					entity.getEmail(), entity.getTelephone(), entity.getAdresse());
+	}
+
+	public Lecteur lecteurDtoToLecteur(LecteurDto dto) {
+		return new Lecteur(dto.getIdPersonne(), dto.getPrenom(), dto.getNom(), dto.getEmail(),
+					dto.getTelephone(), dto.getAdresse());
+	}
+
+	public List<LecteurDto> lecteurToLecteurDto(List<Lecteur> entityList) {
+		return entityList.stream().map(e -> lecteurToLecteurDto(e)).toList();
 	}
 
 }
