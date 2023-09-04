@@ -17,8 +17,10 @@ import com.inetum.AppBibliotheque.livres.dto.LivreDtoEx;
 import com.inetum.AppBibliotheque.livres.dto.LivreDtoEx2;
 import com.inetum.AppBibliotheque.livres.entities.Exemplaire;
 import com.inetum.AppBibliotheque.livres.entities.Livre;
+import com.inetum.AppBibliotheque.personnes.dto.AdministrateurDto;
 import com.inetum.AppBibliotheque.personnes.dto.LecteurDto;
 import com.inetum.AppBibliotheque.personnes.dto.PersonneDto;
+import com.inetum.AppBibliotheque.personnes.entities.Administrateur;
 import com.inetum.AppBibliotheque.personnes.entities.Lecteur;
 import com.inetum.AppBibliotheque.personnes.entities.Personne;
 
@@ -162,6 +164,23 @@ public class DtoConverter {
 
 	public List<LecteurDto> lecteurToLecteurDto(List<Lecteur> entityList) {
 		return entityList.stream().map(e -> lecteurToLecteurDto(e)).toList();
+	}
+
+	// Administrateur
+
+	public AdministrateurDto administrateurToAdministrateurDto(Administrateur entity) {
+		return new AdministrateurDto(entity.getIdPersonne(), entity.getPrenom(), entity.getNom(),
+					entity.getEmail(), entity.getTelephone(), entity.getAdresse(), entity.getUsername(),
+					entity.getPassword());
+	}
+
+	public Administrateur administrateurDtoToAdministrateur(AdministrateurDto dto) {
+		return new Administrateur(dto.getIdPersonne(), dto.getPrenom(), dto.getNom(), dto.getEmail(),
+					dto.getTelephone(), dto.getAdresse(), dto.getUsername(), dto.getPassword());
+	}
+
+	public List<AdministrateurDto> administrateurToAdministrateurDto(List<Administrateur> entityList) {
+		return entityList.stream().map(e -> administrateurToAdministrateurDto(e)).toList();
 	}
 
 }
