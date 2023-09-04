@@ -1,0 +1,57 @@
+@import url('https://fonts.googleapis.com/css2?family=Alfa+Slab+One&family=Noto+Serif+KR:wght@300&display=swap');
+
+.header {
+    padding: 25px;
+    text-align: center;
+    background-color: #37474f;
+    color: #eceff1;
+    text-transform: uppercase;
+    font-family: 'Alfa Slab One', cursive;
+    font-size: 2.5rem;
+    letter-spacing: 2px;
+}
+
+.content {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+}
+
+.titre {
+    font-family: 'Alfa Slab One', cursive;
+    color: white;
+    text-align: center;
+    padding: 15px;
+    text-transform: uppercase;
+    font-size: 1.5rem;
+}
+
+.monForm, .resultat, .error {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+form {
+    padding: 10px;
+}
+
+.form-control, .btn {
+    border-radius: 0;
+}
+
+.resultat, .error {
+    margin-top: 15px;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+.resultat {
+    background-color: forestgreen;
+}
+
+.error {
+    background-color: darkred;
+}

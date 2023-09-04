@@ -1,0 +1,54 @@
+.form-group{
+	display: flex;
+	
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+h1{
+	text-align: center;
+	padding-top: 10px;
+}
+
+#boutonRetour {
+	border-radius:10px;
+    position: fixed;  
+    bottom: 20px;   
+    right: 20px;      
+}
+#btnReserver{
+	border-radius:10px;
+	 padding-left: 5px;
+}
+.col-sm-10{
+	flex-wrap: row wrap;
+	align-items: center;
+}
+
+
+@media screen and (min-width : 600px) {
+    h1 {
+        font-size: 48pt;
+    }
+    body {
+      background-color: #f4b6a6
+    }
+}
+
+ 
+
+/* ensuite nouvelles regles pour taille < 600px de large) */
+
+@media screen and (max-width : 600px) {
+    h1 {
+  font-size: 24pt;
+    font-style: italic;
+   }
+    body {
+
+        background-color: #bbe1b1;
+
+    }
+
+ 
+
+}

@@ -12,22 +12,100 @@
 </head>
 
 <body>
-	<h1>Liste des livres</h1>
-	<table border="1">
-		<thead>
-			<tr>
-				<th>n° exemplaire</th>
-				<th>Titre</th>
-				<th>Etat</th>
-				<th>Disponibilité</th>
-				<th>Action</th>
-			</tr>
-		</thead>
-		<tbody id="table_body" >
+	<h1>Liste des exemplaires :</h1>
+	<div>
+		<form>
+			<div class="form-group">
+			<label for="recherche"></label>
+			<input type="text" id="recherche" class="form-control" placeholder="Rechercher par titre">
+			<button type="submit" id="rechercher-btn" class="btn btn-primary">Chercher</button>
+			</div>
+		</form>
+	</div>
+	<br/>
+	<div>
+		<table  border="1">
+			<thead>
+				<tr>
+					<th>n° exemplaire</th>
+					<th>Titre</th>
+					<th>Etat</th>
+					<th>Disponibilité</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody id="table_body" >
+	
+			</tbody>
+		</table>
+	</div>
+		
+	<div>
+		<p>
+			<a href="livreAjax.html"><button>Retour </button></a><br/>		
+		</p>
+	</div>
+	
+		<script >
+	
+	
+		   
+function RechercherExemplaire() {
+	var titre = document.getElementById("recherche").value;
+	
+	if (titre){
+	var xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
+	
+	xhr.addEventListener("readystatechange", function() {
+		console.log(this.responseText);
+	  if(this.readyState === 4) {
+		if ((xhr.status == 200 || xhr.status == 0)) {
+			let data = JSON.parse(this.responseText)
+			let bodyElt = document.getElementById("table_body");
+			bodyElt.innerHTML = "";//vider le tableau avant de le re-remplir
+			for (let exemp of data) {
+				let row = bodyElt.insertRow(-1);
+				(row.insertCell(0)).innerHTML = exemp.idExemp;
+				(row.insertCell(1)).innerHTML = exemp.livre.titre;
+				(row.insertCell(2)).innerHTML = exemp.etat;
+				(row.insertCell(3)).innerHTML = exemp.isDisponibilite;
+				let link = document.createElement("a");
+				link.href = "formulaireReservation.html?id=" + exemp.idExemp + "&disponibilite=" + (exemp.isDisponibilite ? 'succes' : 'echec' );
+				let reserverButton = document.createElement("button");
+				reserverButton.textContent = "Reserver";
+				link.appendChild(reserverButton);
+				row.insertCell(4).appendChild(link);
+		}
+				
+			}
+		else {
+			alert("Exemplaire non existant ");
+	}
+				  
+			}
+	  });
+	
+	xhr.open("GET", "http://localhost:8080/AppBibliotheque/api-livres/livre/ListExempTitre/" + titre);
+	xhr.send();
+	}
+	
+	else{
+		 alert("Veuillez remplir tous les champs!");
+	}
+}
+	
+   	
+       // liaison du boutton ajouter à la fonction ajouterLivre()
+        document.addEventListener("DOMContentLoaded", function() {
+        var validerButton = document.getElementById("rechercher-btn");
+        validerButton.addEventListener("click", function(event) {
+            event.preventDefault(); 
+            RechercherExemplaire(); 
+        });
+    });
+    </script>
 
-		</tbody>
-	</table>	
-
+	
 </body>
-
 </html>

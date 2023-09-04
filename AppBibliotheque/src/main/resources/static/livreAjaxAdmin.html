@@ -4,7 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" charset="UTF-8" />
 	<title>Liste des livres : </title>
 	<script src="my_ajax_util.js"></script>
 	<script src="livreAjax.js"></script>
@@ -12,26 +12,110 @@
 </head>
 
 <body>
-	<p>
-		<a href="formulaireAddLivre.html"><button>Ajouter livre</button></a>
-		<a href="exemplaireAjaxAdmin.html"><button>Consulter les exemplaires</button></a>
-	</p>
-	<table border="1">
-		<thead>
-			<tr>
-				<th>Id</th>
-				<th>Auteur</th>
-				<th>Editeur</th>
-				<th>Titre</th>
-				<th>Domaine</th>
-				<th>Description</th>
-				<th>Action</th>
-			</tr>
-		</thead>
-		<tbody id="table_body" >
+	<div>
+		<form>
+			<div class="form-group">
+			<label for="recherche"></label>
+			<input type="text" id="recherche" class="form-control" placeholder="Rechercher par titre">
+			<button type="submit" id="rechercher-btn" class="btn btn-primary">Chercher</button>
+			</div>
+		</form>
+	</div>
+	
+	<div>
+		<p>
+			<a href="formulaireAddLivre.html"><button>Ajouter livre</button></a><br/>	
+			<br/>	
+			<a href="exemplaireAjaxAdmin.html"><button>Consulter les exemplaires</button></a>	
+		</p>
+	</div>
+	
+	<div>	
+		<table border="1">
+			<thead>
+				<tr>
+					<th>Id</th>
+					<th>Auteur</th>
+					<th>Editeur</th>
+					<th>Titre</th>
+					<th>Domaine</th>
+					<th>Description</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody id="table_body" >
+	
+			</tbody>
+		</table>
+	</div>
+	<div>
+		<p>
+			<a href="index.html"><button>Retour à l'accueil</button></a><br/>		
+		</p>
+	</div>
 
-		</tbody>
-	</table>
+	<script >
+	
+	
+		   
+function RechercherLivre() {
+	var titre = document.getElementById("recherche").value;
+	
+	if (titre){
+	var xhr = new XMLHttpRequest();
+	xhr.withCredentials = true;
+	
+	xhr.addEventListener("readystatechange", function() {
+	 
+	  console.log(this.responseText);
+	  if(this.readyState === 4) {
+		 if ((xhr.status == 200 || xhr.status == 0)) {
+			    let livre = JSON.parse(this.responseText)
+				let bodyElt = document.getElementById("table_body");
+				bodyElt.innerHTML = "";//vider le tableau avant de le re-remplir
+
+					let row = bodyElt.insertRow(-1);
+					(row.insertCell(0)).innerHTML = livre.idLivre;
+					(row.insertCell(1)).innerHTML = livre.auteur;
+					(row.insertCell(2)).innerHTML = livre.editeur;
+					(row.insertCell(3)).innerHTML = livre.titre;
+					(row.insertCell(4)).innerHTML = livre.domaine.nom;
+					(row.insertCell(5)).innerHTML = livre.domaine.description;
+					let link = document.createElement("a");
+					link.href = "formulaireAjouterExemplaire.html?idLivre=" + livre.idLivre;
+					let ajouterButton = document.createElement("button");
+					ajouterButton.textContent = "Ajouter";
+					link.appendChild(ajouterButton);
+					row.insertCell(6).appendChild(link);
+			 } 
+ 		else {
+			alert("Livre non existant ");
+	}
+			 
+			 
+		
+			}
+	  });
+	
+	xhr.open("GET", "http://localhost:8080/AppBibliotheque/api-livres/livre/byTitre/" + titre);
+	xhr.send();
+	}
+	
+	else{
+		 alert("Veuillez remplir tous les champs!");
+	}
+}
+	
+   	
+       // liaison du boutton ajouter à la fonction ajouterLivre()
+        document.addEventListener("DOMContentLoaded", function() {
+        var validerButton = document.getElementById("rechercher-btn");
+        validerButton.addEventListener("click", function(event) {
+            event.preventDefault(); 
+            RechercherLivre(); 
+        });
+    });
+    </script>
 
 
 </body>
