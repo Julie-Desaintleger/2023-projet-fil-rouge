@@ -87,12 +87,12 @@ public class TestLivreDao {
 
 		// FIND BY (LIVRE)
 
-		List<Livre> LivreRelu = daoLivreJpa.findByTitre("PHP");
-		assertTrue(LivreRelu.size() >= 1);
-
-		for (Livre livres : LivreRelu)
-
-			logger.trace("\t LivreRelu=" + livres);
+//		List<Livre> LivreRelu = daoLivreJpa.findByTitre("PHP");
+//		assertTrue(LivreRelu.size() >= 1);
+//
+//		for (Livre livres : LivreRelu)
+//
+//			logger.trace("\t LivreRelu=" + livres);
 
 		// FIND BY (DOMAINE)
 

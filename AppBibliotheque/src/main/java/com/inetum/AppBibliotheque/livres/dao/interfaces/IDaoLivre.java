@@ -8,6 +8,6 @@ import com.inetum.AppBibliotheque.livres.entities.Livre;
 
 public interface IDaoLivre extends JpaRepository<Livre, Long>{
 	
-	List<Livre> findByTitre(String titre);
+	Livre findByTitre(String titre);
 
 }

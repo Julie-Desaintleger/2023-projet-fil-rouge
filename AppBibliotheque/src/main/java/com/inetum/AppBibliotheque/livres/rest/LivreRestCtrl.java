@@ -54,6 +54,18 @@ public class LivreRestCtrl {
 			return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}", HttpStatus.NOT_FOUND);
 		}
 	}
+	/********** FIND BY TITLE */
+	
+	// exemple URL de déclenchement: ./api-livres/livre/"titre"
+	@GetMapping("byTitre/{titre}")
+	public ResponseEntity<?> getLivreByTitle(@PathVariable("titre") String titre) {
+		LivreDto livreDto = GenericConverter.map(serviceLivre.searchByTitle(titre), LivreDto.class);
+		if (livreDto != null) {
+			return new ResponseEntity<LivreDto>(livreDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}", HttpStatus.NOT_FOUND);
+		}
+	}
 
 	/*********** FINDALL */
 	@GetMapping("")
@@ -111,6 +123,17 @@ public class LivreRestCtrl {
 			return new ResponseEntity<String>("{ \"err\" : \"exemplaire not found\"}", HttpStatus.NOT_FOUND);
 		}
 	}
+	
+//	@GetMapping("ListExempTitre/{titre}")
+//	public ResponseEntity<?> getExemplaireByTitle(@PathVariable("titre") String titre) {
+//		List<LivreDto> listeLivreDto = GenericConverter.map(serviceLivre.searchByTitle(titre), LivreDto.class);
+//		if (listeLivreDto != null) {
+//			return new ResponseEntity<List<LivreDto>>(listeLivreDto, HttpStatus.OK);
+//		} else {
+//			return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}", HttpStatus.NOT_FOUND);
+//		}
+//	}
+
 
 	// exemple de fin d'URL de déclenchement:
 	// ./api-livres/livre
