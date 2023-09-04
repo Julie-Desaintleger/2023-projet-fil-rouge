@@ -15,5 +15,6 @@ public interface IServiceExemplaire extends IGenericService<Exemplaire, Long, Ex
 	public ExemplaireDtoEx2 searchByIdWithLivre(Long idExemp);
 	public List<ExemplaireDtoEx2> searchAllWithAllLivre();
 	public ExemplaireDtoEx saveOrUpdateExemplaireDtoEx(ExemplaireDtoEx exemplaireDtoEx);
+	public List<ExemplaireDtoEx2> findByBookTitle(String titre);
 
 }

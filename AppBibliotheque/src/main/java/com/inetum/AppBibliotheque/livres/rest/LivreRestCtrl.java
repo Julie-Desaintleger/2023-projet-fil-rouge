@@ -54,6 +54,18 @@ public class LivreRestCtrl {
 			return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}", HttpStatus.NOT_FOUND);
 		}
 	}
+	/********** FIND BY TITLE */
+	
+	// exemple URL de déclenchement: ./api-livres/livre/"titre"
+	@GetMapping("byTitre/{titre}")
+	public ResponseEntity<?> getLivreByTitle(@PathVariable("titre") String titre) {
+		LivreDto livreDto = serviceLivre.searchByTitle(titre);
+		if (livreDto != null) {
+			return new ResponseEntity<LivreDto>(livreDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}", HttpStatus.NOT_FOUND);
+		}
+	}
 
 	/*********** FINDALL */
 	@GetMapping("")
@@ -100,7 +112,7 @@ public class LivreRestCtrl {
 
 	// --------EXEMPLAIRE----------------
 
-	/************ FIND BY ID */
+	
 
 	@GetMapping("/exemplaire/{idExemp}")
 	public ResponseEntity<?> getExempalireById(@PathVariable("idExemp") Long idExemp) {
@@ -111,6 +123,19 @@ public class LivreRestCtrl {
 			return new ResponseEntity<String>("{ \"err\" : \"exemplaire not found\"}", HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	/************ FIND BY TITRE */
+	
+	@GetMapping("ListExempTitre/{titre}")
+	public ResponseEntity<?> getExemplaireByTitle(@PathVariable("titre") String titre) {
+		List<ExemplaireDtoEx2> listeLivreDto = serviceExemplaire.findByBookTitle(titre);
+		if (listeLivreDto != null) {
+			return new ResponseEntity<List<ExemplaireDtoEx2>>(listeLivreDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}", HttpStatus.NOT_FOUND);
+		}
+	}
+
 
 	// exemple de fin d'URL de déclenchement:
 	// ./api-livres/livre

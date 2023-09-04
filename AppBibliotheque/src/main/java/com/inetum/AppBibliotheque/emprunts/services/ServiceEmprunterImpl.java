@@ -78,6 +78,7 @@ public class ServiceEmprunterImpl extends AbstractGenericService<Emprunter, Long
 			return emprunterDtoEx; // on retourne le DtoEx sauvegardé
 			// avec la clef primaire éventuellement autoincrémenté
 		}else
+			   
 			return null;//A améliorer
 	}
 

@@ -70,6 +70,12 @@ public class ServiceLivreImpl extends AbstractGenericService<Livre, Long, LivreD
 		return dtoConverter.LivreToLivreDtoEx2(searchAll());
 	
 	}
+
+	@Override
+	public LivreDtoEx2 searchByTitle(String titre) {
+		return dtoConverter.LivreToLivreDtoEx2(daoLivre.findByTitre(titre)) ;
+		
+	}
 	}
 
 	

@@ -1,13 +1,11 @@
 package com.inetum.AppBibliotheque.livres.dao.interfaces;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.inetum.AppBibliotheque.livres.entities.Livre;
 
 public interface IDaoLivre extends JpaRepository<Livre, Long>{
 	
-	List<Livre> findByTitre(String titre);
+	Livre findByTitre(String titre);
 
 }
