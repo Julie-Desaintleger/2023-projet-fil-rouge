@@ -129,7 +129,7 @@ public class LivreRestCtrl {
 	@GetMapping("ListExempTitre/{titre}")
 	public ResponseEntity<?> getExemplaireByTitle(@PathVariable("titre") String titre) {
 		List<ExemplaireDtoEx2> listeLivreDto = serviceExemplaire.findByBookTitle(titre);
-		if (listeLivreDto != null) {
+		if (listeLivreDto.size() != 0) {
 			return new ResponseEntity<List<ExemplaireDtoEx2>>(listeLivreDto, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<String>("{ \"err\" : \"livre not found\"}", HttpStatus.NOT_FOUND);

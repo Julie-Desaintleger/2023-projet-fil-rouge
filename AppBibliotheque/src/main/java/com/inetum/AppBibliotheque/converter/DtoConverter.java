@@ -26,8 +26,7 @@ public class DtoConverter {
 
 	// LIVRES-------------------------------------
 	public /* static */ LivreDto LivreToLivreDto(Livre entity) {
-		return new LivreDto(entity.getIdLivre(), entity.getTitre(), entity.getAuteur(),
-					entity.getEditeur());
+		return new LivreDto(entity.getIdLivre(), entity.getTitre(), entity.getAuteur(), entity.getEditeur());
 	}
 
 	public /* static */ List<LivreDto> LivreToLivreDto(List<Livre> entityList) {
@@ -36,9 +35,13 @@ public class DtoConverter {
 
 	public /* static */ LivreDtoEx2 LivreToLivreDtoEx2(Livre entity) {
 		LivreDtoEx2 livreDto = new LivreDtoEx2();
-		BeanUtils.copyProperties(entity, livreDto);
-		livreDto.setDomaine(GenericConverter.map(entity.getDomaine(), DomaineDto.class));
-		return livreDto;
+		if (entity != null) {
+			BeanUtils.copyProperties(entity, livreDto);
+			livreDto.setDomaine(GenericConverter.map(entity.getDomaine(), DomaineDto.class));
+			return livreDto;
+		}else {
+			return null;
+		}
 	}
 
 	public /* static */ List<LivreDtoEx2> LivreToLivreDtoEx2(List<Livre> entityList) {
@@ -60,8 +63,8 @@ public class DtoConverter {
 	// EXEMPLAIRES
 
 	public /* static */ ExemplaireDto exemplaireToExemplaireDto(Exemplaire entity) {
-		return new ExemplaireDto(entity.getIdExemp(), entity.getEtat().toString(),
-					entity.getIsDisponibilite(), entity.getLabel());
+		return new ExemplaireDto(entity.getIdExemp(), entity.getEtat().toString(), entity.getIsDisponibilite(),
+				entity.getLabel());
 	}
 
 	public /* static */ List<ExemplaireDto> exemplaireToExemplaireDto(List<Exemplaire> entityList) {
@@ -76,8 +79,7 @@ public class DtoConverter {
 		return exemplaireDto;
 	}
 
-	public /* static */ List<ExemplaireDtoEx2> exemplaireToExemplaireDtoEx2(
-				List<Exemplaire> entityList) {
+	public /* static */ List<ExemplaireDtoEx2> exemplaireToExemplaireDtoEx2(List<Exemplaire> entityList) {
 		return entityList.stream().map((entity) -> exemplaireToExemplaireDtoEx2(entity)).toList();
 	}
 
@@ -102,23 +104,20 @@ public class DtoConverter {
 
 	public /* static */ EmprunterDto emprunterToEmprunterDto(Emprunter entity) {
 		return new EmprunterDto(entity.getId(), entity.getDateDebut(), entity.getDateFin(),
-					entity.getType().toString());
+				entity.getType().toString());
 	}
 
 	public /* static */ EmprunterDtoEx2 emprunterToEmprunterDtoEx2(Emprunter entity) {
 		EmprunterDtoEx2 emprunterDto = new EmprunterDtoEx2();
 		BeanUtils.copyProperties(entity, emprunterDto);
-		emprunterDto.setExemplaire(
-					GenericConverter.map(entity.getExemplaireEmprunte(), ExemplaireDto.class));
+		emprunterDto.setExemplaire(GenericConverter.map(entity.getExemplaireEmprunte(), ExemplaireDto.class));
 		emprunterDto.setLecteur(GenericConverter.map(entity.getEmprunteur(), LecteurDto.class));
 		emprunterDto.setType(entity.getType().toString());
 		return emprunterDto;
 	}
 
 	public /* static */ EmprunterDtoEx emprunterToEmprunterDtoEx(Emprunter entity) {
-		Long idExemp = entity.getExemplaireEmprunte() != null
-					? entity.getExemplaireEmprunte().getIdExemp()
-					: null;
+		Long idExemp = entity.getExemplaireEmprunte() != null ? entity.getExemplaireEmprunte().getIdExemp() : null;
 		Long idLect = entity.getEmprunteur() != null ? entity.getEmprunteur().getIdPersonne() : null;
 		EmprunterDtoEx emprunterDto = new EmprunterDtoEx();
 		BeanUtils.copyProperties(entity, emprunterDto); // compact/écriture concise mais pas rapide
@@ -136,13 +135,13 @@ public class DtoConverter {
 
 	// Personne
 	public PersonneDto personneToPersonneDto(Personne entity) {
-		return new PersonneDto(entity.getIdPersonne(), entity.getPrenom(), entity.getNom(),
-					entity.getEmail(), entity.getTelephone(), entity.getAdresse());
+		return new PersonneDto(entity.getIdPersonne(), entity.getPrenom(), entity.getNom(), entity.getEmail(),
+				entity.getTelephone(), entity.getAdresse());
 	}
 
 	public Personne personneDtoToPersonne(PersonneDto dto) {
-		return new Personne(dto.getIdPersonne(), dto.getPrenom(), dto.getNom(), dto.getEmail(),
-					dto.getTelephone(), dto.getAdresse());
+		return new Personne(dto.getIdPersonne(), dto.getPrenom(), dto.getNom(), dto.getEmail(), dto.getTelephone(),
+				dto.getAdresse());
 	}
 
 	public List<PersonneDto> personneToPersonneDto(List<Personne> entityList) {
@@ -151,13 +150,13 @@ public class DtoConverter {
 
 	// Lecteur
 	public LecteurDto lecteurToLecteurDto(Lecteur entity) {
-		return new LecteurDto(entity.getIdPersonne(), entity.getPrenom(), entity.getNom(),
-					entity.getEmail(), entity.getTelephone(), entity.getAdresse());
+		return new LecteurDto(entity.getIdPersonne(), entity.getPrenom(), entity.getNom(), entity.getEmail(),
+				entity.getTelephone(), entity.getAdresse());
 	}
 
 	public Lecteur lecteurDtoToLecteur(LecteurDto dto) {
-		return new Lecteur(dto.getIdPersonne(), dto.getPrenom(), dto.getNom(), dto.getEmail(),
-					dto.getTelephone(), dto.getAdresse());
+		return new Lecteur(dto.getIdPersonne(), dto.getPrenom(), dto.getNom(), dto.getEmail(), dto.getTelephone(),
+				dto.getAdresse());
 	}
 
 	public List<LecteurDto> lecteurToLecteurDto(List<Lecteur> entityList) {
