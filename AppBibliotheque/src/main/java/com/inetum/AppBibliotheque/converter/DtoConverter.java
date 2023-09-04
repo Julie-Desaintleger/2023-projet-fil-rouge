@@ -117,6 +117,10 @@ public class DtoConverter {
 		emprunterDto.setType(entity.getType().toString());
 		return emprunterDto;
 	}
+	
+	public /* static */ List<EmprunterDtoEx2> emprunterToEmprunterDtoEx2(List<Emprunter> entityList) {
+		return entityList.stream().map((entity) -> emprunterToEmprunterDtoEx2(entity)).toList();
+	}
 
 	public /* static */ EmprunterDtoEx emprunterToEmprunterDtoEx(Emprunter entity) {
 		Long idExemp = entity.getExemplaireEmprunte() != null ? entity.getExemplaireEmprunte().getIdExemp() : null;

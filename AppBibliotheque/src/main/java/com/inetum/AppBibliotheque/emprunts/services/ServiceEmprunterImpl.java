@@ -87,4 +87,14 @@ public class ServiceEmprunterImpl extends AbstractGenericService<Emprunter, Long
 		return dtoConverter.emprunterToEmprunterDtoEx(searchAll());
 	}
 
-}
+	@Override
+	public List<EmprunterDtoEx2> searchListofEmpruntByIdLecteur(Long idPers) {
+		return dtoConverter.emprunterToEmprunterDtoEx2(daoEmprunt.findByemprunteurIdPersonne(idPers));
+	}
+
+	
+
+	
+	}
+
+

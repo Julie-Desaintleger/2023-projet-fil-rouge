@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inetum.AppBibliotheque.emprunts.dto.EmprunterDto;
 import com.inetum.AppBibliotheque.emprunts.dto.EmprunterDtoEx;
+import com.inetum.AppBibliotheque.emprunts.dto.EmprunterDtoEx2;
 import com.inetum.AppBibliotheque.emprunts.entities.Emprunter;
 import com.inetum.AppBibliotheque.emprunts.services.IServiceEmprunter;
 
@@ -42,6 +43,19 @@ public class EmprunterRestCtrl {
 			return new ResponseEntity<String>("{ \"err\" : \"emprunt not found\"}", HttpStatus.NOT_FOUND);
 		}
 	}
+	
+	/********** FIND BY ID */
+
+	// exemple URL de déclenchement: ./api-emprunts/emprunt/MesEmprunts/1
+	@GetMapping("MesEmprunts/{idPers}")
+	public ResponseEntity<?> getListEmpruntofReader(@PathVariable("idPers") Long idPers) {
+		List<EmprunterDtoEx2> listempruntsDto = serviceEmprunter.searchListofEmpruntByIdLecteur(idPers);
+		if (listempruntsDto.size() != 0) {
+			return new ResponseEntity<List<EmprunterDtoEx2>>(listempruntsDto, HttpStatus.OK);
+		} else {
+			return new ResponseEntity<String>("{ \"err\" : \"ce lecteur n'a fait aucun emprunt\"}", HttpStatus.NOT_FOUND);
+		}
+	}
 
 	/*********** FINDALL */
 	@GetMapping("")
@@ -50,7 +64,7 @@ public class EmprunterRestCtrl {
 
 	}
 
-	/*********** SAVE */
+	/*********** SAVE OR UPDATE*/
 
 	@PostMapping("")
 	public ResponseEntity<?> /*EmprunterDto*/ postEmprunt(@RequestBody EmprunterDtoEx nouvelEmprunt) {

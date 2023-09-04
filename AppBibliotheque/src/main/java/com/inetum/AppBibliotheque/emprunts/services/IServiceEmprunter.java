@@ -12,5 +12,7 @@ public interface IServiceEmprunter extends IGenericService<Emprunter, Long, Empr
 	public EmprunterDtoEx2 searchByIdWithExemplaireAndLecteur(Long idEmprunter);
 	public EmprunterDtoEx saveOrUpdateEmpruntDtoEx(EmprunterDtoEx emprunterDtoEx);
 	public List<EmprunterDtoEx> searchAllDtoEx();
+	public List<EmprunterDtoEx2> searchListofEmpruntByIdLecteur(Long idPers);
+	//public EmprunterDtoEx managerMyBooking(EmprunterDtoEx emprunterDtoEx);
 
 }
