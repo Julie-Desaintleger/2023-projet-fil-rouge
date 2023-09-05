@@ -1,16 +1,65 @@
-<br?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html>
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-<title>index</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Login</title>
+
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="css/styles.css">
+	<link rel="stylesheet" href="./assets/bs/css/bootstrap.min.css">
+	<script src="my_ajax_util.js"></script>
+	<script src="loginPage.js"></script>
+
 </head>
+
 <body>
-<h2>Welcome to AppBibliotheque</h2>
-<h3>URL documentation Api REST swagger :</h3>
-<a href="./doc-swagger.html">documentation Api REST par swagger3/openapi</a></br>
-<a href="./livreAjax.html">Consulter les livres </a></br>
-<a href="./livreAjaxAdmin.html">Consulter les livres Admin </a></br>
-<hr />
+	
+	<header>
+        <div class="logo">
+            <img src="icons8-livres-64.png" >
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+	<div class="form-formulaire" >
+		<form id="login-form">
+			<p> Les champs suivis d’un astérisque (*) sont obligatoires.</p>
+			<!-- Email input -->
+			<div class="form-outline mb-4"><label class="form-label" for="utilisateur">Email (ou username) *</label>
+				<input type="text" id="utilisateur" class="form-control" />
+			</div>
+
+			<!-- Password input -->
+			<div class="form-outline mb-4"><label class="form-label" for="mdp">Mot de passe *</label>
+				<input type="password" id="mdp" class="form-control" />
+			</div>
+
+
+			<!-- Submit button -->
+			<div>
+				<input type="button" class="btn btn-primary btn-block mb-4" value="Se connecter"
+					onclick="connecter()" />
+			</div>
+
+			<div id="loginErrorMsg"></div>
+		</form>
+	</div>
+	
+	 <footer class="footer-page">
+		<div class="footer-text">
+			 <p>Horaires d'ouverture : Lundi au Vendredi, 9h00 - 18h00</p>
+       		 <p>&copy; 2023 Ma Bibliothèque. Tous droits réservés.</p>
+		</div>
+        <div  class="footer-text">
+			<span><img src="icons8-courrier-50.png" style="width: 23px;" > info@ma-bibliotheque.com</span><br/>
+			<span><img src="icons8-téléphone-30.png" style="width: 23px;" > 09 70 60 17 00 </span>
+		</div>
+    </footer>
 </body>
 </html>
