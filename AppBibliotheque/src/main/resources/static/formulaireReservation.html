@@ -5,37 +5,55 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="livreAjax.js"></script>
 <script src="my_ajax_util.js"></script>
 </head>
 <body>
-	<form>
-	<div class="form-group">
-	<label for="idexemp">Id exemplaire :</label>
+	
+	<header>
+        <div class="logo">
+            <img src="icons8-livres-64.png" >
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="#">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+	
+	
+	
+	<form class="form-reservation">
+	<p> Les champs suivis d’un astérisque (*) sont obligatoires.</p>
+	<div class="form-group champ-reservation">
+	<label for="idexemp">Id exemplaire </label>
 	<input type="number" id="idexemp"  class="form-control" readonly>
 	</div>
-	<div class="form-group">
-	<label for="datedebut">date de debut:</label>
+	<div class="form-group champ-reservation">
+	<label for="datedebut">Date de debut *</label>
 	<input type="date" id="datedebut" class="form-control" placeholder="Enter la date de début">
 	</div>
-	<div class="form-group">
-	<label for="datefin">date de fin:</label>
+	<div class="form-group champ-reservation">
+	<label for="datefin">Date de fin *</label>
 	<input type="date" id="datefin" class="form-control" placeholder="Enter la date de fin">
 	</div>
-	<div class="form-group">
-	<label for="idlecteur">id du lecteur:</label>
+	<div class="form-group champ-reservation">
+	<label for="idlecteur">Id du lecteur *</label>
 	<input type="number"  id="idlecteur" class="form-control" placeholder="Enter id du lecteur">
 	</div>
-	<div class="form-group">
-	<label for="reservationType">Type de reservation:</label>
+	<div class="form-group champ-reservation" >
+	<label for="reservationType">Type de reservation *</label>
 	<select name="reservationtype" id="reservationType">
-	  <option value="">--selectionner un type de reservation--</option>
+	  <option value="">Selectionner un type de reservation</option>
 	  <option value="EFFECTIF">EFFECTIF</option>
 	  <option value="RESERVE">RESERVE</option>
 	</select>	
 	</div>
 	<button type="submit" id="valider-btn" class="btn btn-primary">Valider</button>
+	
 	</form>
 
 	<script >
@@ -120,6 +138,17 @@
         });
     });
     </script>
+    
+    	<footer class="footer-page">
+		<div class="footer-text">
+			 <p>Horaires d'ouverture : Lundi au Vendredi, 9h00 - 18h00</p>
+       		 <p>&copy; 2023 Ma Bibliothèque. Tous droits réservés.</p>
+		</div>
+        <div  class="footer-text">
+			<span><img src="icons8-courrier-50.png" style="width: 23px;" > info@ma-bibliotheque.com</span><br/>
+			<span><img src="icons8-téléphone-30.png" style="width: 23px;" > 09 70 60 17 00 </span>
+		</div>
+    </footer>
 </body>
 </html>
 

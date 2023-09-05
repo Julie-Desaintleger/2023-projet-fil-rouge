@@ -43,6 +43,7 @@ function exemplaire() {
 			let link = document.createElement("a");
 			link.href = "formulaireReservation.html?id=" + exemp.idExemp + "&disponibilite=" + (exemp.isDisponibilite ? 'succes' : 'echec' );
 			let reserverButton = document.createElement("button");
+			reserverButton.className = "btn-reserver";
 			reserverButton.textContent = "Reserver";
 			link.appendChild(reserverButton);
 			row.insertCell(4).appendChild(link);
