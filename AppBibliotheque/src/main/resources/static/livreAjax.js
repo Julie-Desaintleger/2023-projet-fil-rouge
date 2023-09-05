@@ -79,6 +79,7 @@ function livreWithButtunAdd() {
 			let link = document.createElement("a");
 			link.href = "formulaireAjouterExemplaire.html?idLivre=" + livre.idLivre;
 			let ajouterButton = document.createElement("button");
+			ajouterButton.className = "btn-ajouter";
 			ajouterButton.textContent = "Ajouter";
 			link.appendChild(ajouterButton);
 			row.insertCell(6).appendChild(link);
@@ -113,11 +114,13 @@ function exemplaireAdmin() {
 			let linkModifier = document.createElement("a");
 			linkModifier.href = "formulaireModifierExemplaire.html?id=" + exemp.idExemp + "&etat="+ exemp.etat + "&disponibilite=" + exemp.isDisponibilite  +  "&label=" + exemp.label  + "&idLivre="+ exemp.livre.idLivre ; 
 			let modifierButton = document.createElement("button"); 
+			modifierButton.className = "btn-modifier";
 			modifierButton.textContent = "Modifier";
 			linkModifier.appendChild(modifierButton);
 
 			let linkSupprimer = document.createElement("a");
 			let supprimerButton = document.createElement("button");
+			supprimerButton.className = "btn-supprimer";
 			supprimerButton.textContent = "Supprimer";
 			supprimerButton.addEventListener("click", function() {
 			Supprimerexemplaire(exemp.idExemp,exemp.etat,(exemp.isDisponibilite ? 'succes' : 'echec' ));

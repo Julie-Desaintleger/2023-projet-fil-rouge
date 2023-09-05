@@ -5,27 +5,47 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="livreAjax.js"></script>
 <script src="my_ajax_util.js"></script>
 </head>
 <body>
-	<form>
-	<div class="form-group">
-	<label for="titre">Titre :</label>
+	
+	<header>
+        <div class="logo">
+            <img src="icons8-livres-64.png" >
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="#">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+	
+	<div>
+		<p>
+			<a href="livreAjaxAdmin.html"><button id="btn-retour" style="padding-top: 20px"><img src="icons8-retour-24.png" style="margin-right: 5px;">Retour </button></a><br/>		
+		</p>
+	</div>
+	
+	<form class="form-formulaire form-corrige">
+	<div class="form-group champ">
+	<label for="titre">Titre </label>
 	<input type="text" id="titre" class="form-control" placeholder="Enter le titre du livre">
 	</div>
-	<div class="form-group">
-	<label for="auteur">Auteur:</label>
+	<div class="form-group champ">
+	<label for="auteur">Auteur</label>
 	<input type="text" id="auteur" class="form-control" placeholder="Enter l'auteur du livre">
 	</div>
-	<div class="form-group">
-	<label for="editeur">Editeur :</label>
+	<div class="form-group champ">
+	<label for="editeur">Editeur </label>
 	<input type="text"  id="editeur" class="form-control" placeholder="Enter id du lecteur">
 	</div>
 	
-	<div class="form-group">
-	<label for="idDomaine">Id domaine :</label>
+	<div class="form-group champ">
+	<label for="idDomaine">Id domaine </label>
 	<input type="number" id="idDomaine"  class="form-control" placeholder="Enter id du domaine" >
 	</div>
 	<button type="submit" id="ajouter-btn" class="btn btn-primary">Valider</button>
@@ -77,6 +97,16 @@
         });
     });
     </script>
+      <footer class="footer-page">
+		<div class="footer-text">
+			 <p>Horaires d'ouverture : Lundi au Vendredi, 9h00 - 18h00</p>
+       		 <p>&copy; 2023 Ma Bibliothèque. Tous droits réservés.</p>
+		</div>
+        <div  class="footer-text">
+			<span><img src="icons8-courrier-50.png" style="width: 23px;" > info@ma-bibliotheque.com</span><br/>
+			<span><img src="icons8-téléphone-30.png" style="width: 23px;" > 09 70 60 17 00 </span>
+		</div>
+    </footer>
 </body>
 </html>
 
