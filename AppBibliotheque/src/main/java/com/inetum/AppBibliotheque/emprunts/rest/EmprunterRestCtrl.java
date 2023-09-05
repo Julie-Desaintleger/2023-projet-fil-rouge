@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inetum.AppBibliotheque.emprunts.dto.EmprunterDto;
 import com.inetum.AppBibliotheque.emprunts.dto.EmprunterDtoEx;
-import com.inetum.AppBibliotheque.emprunts.dto.EmprunterDtoEx2;
+import com.inetum.AppBibliotheque.emprunts.dto.EmprunterDtoEx3;
 import com.inetum.AppBibliotheque.emprunts.entities.Emprunter;
 import com.inetum.AppBibliotheque.emprunts.services.IServiceEmprunter;
 
@@ -49,9 +49,9 @@ public class EmprunterRestCtrl {
 	// exemple URL de déclenchement: ./api-emprunts/emprunt/MesEmprunts/1
 	@GetMapping("MesEmprunts/{idPers}")
 	public ResponseEntity<?> getListEmpruntofReader(@PathVariable("idPers") Long idPers) {
-		List<EmprunterDtoEx2> listempruntsDto = serviceEmprunter.searchListofEmpruntByIdLecteur(idPers);
+		List<EmprunterDtoEx3> listempruntsDto = serviceEmprunter.searchListofEmpruntByIdLecteur(idPers);
 		if (listempruntsDto.size() != 0) {
-			return new ResponseEntity<List<EmprunterDtoEx2>>(listempruntsDto, HttpStatus.OK);
+			return new ResponseEntity<List<EmprunterDtoEx3>>(listempruntsDto, HttpStatus.OK);
 		} else {
 			return new ResponseEntity<String>("{ \"err\" : \"ce lecteur n'a fait aucun emprunt\"}", HttpStatus.NOT_FOUND);
 		}
@@ -64,7 +64,7 @@ public class EmprunterRestCtrl {
 
 	}
 
-	/*********** SAVE OR UPDATE*/
+	/*********** SAVE */
 
 	@PostMapping("")
 	public ResponseEntity<?> /*EmprunterDto*/ postEmprunt(@RequestBody EmprunterDtoEx nouvelEmprunt) {
@@ -85,7 +85,7 @@ public class EmprunterRestCtrl {
 		serviceEmprunter.shouldExistById(idEmpruntToUpdate); // remonte NotFoundException si pas trouvé
 		if (emprunterDto.getId() == null)
 			emprunterDto.setId(idEmpruntToUpdate);
-		serviceEmprunter.saveOrUpdateEmpruntDtoEx(emprunterDto);
+		serviceEmprunter.updateEmpruntDtoEx(emprunterDto);
 		return new ResponseEntity<EmprunterDto>(emprunterDto, HttpStatus.OK);
 	}
 

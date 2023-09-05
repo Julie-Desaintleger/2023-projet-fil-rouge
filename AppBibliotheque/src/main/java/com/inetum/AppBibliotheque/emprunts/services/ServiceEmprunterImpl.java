@@ -14,6 +14,7 @@ import com.inetum.AppBibliotheque.emprunts.dao.interfaces.IDaoEmprunt;
 import com.inetum.AppBibliotheque.emprunts.dto.EmprunterDto;
 import com.inetum.AppBibliotheque.emprunts.dto.EmprunterDtoEx;
 import com.inetum.AppBibliotheque.emprunts.dto.EmprunterDtoEx2;
+import com.inetum.AppBibliotheque.emprunts.dto.EmprunterDtoEx3;
 import com.inetum.AppBibliotheque.emprunts.entities.Emprunter;
 import com.inetum.AppBibliotheque.livres.dao.interfaces.IDaoExemplaire;
 import com.inetum.AppBibliotheque.livres.entities.Exemplaire;
@@ -25,7 +26,7 @@ import com.inetum.AppBibliotheque.services.AbstractGenericService;
 @Transactional
 public class ServiceEmprunterImpl extends AbstractGenericService<Emprunter, Long, EmprunterDto>
 		implements IServiceEmprunter {
-	
+
 	private DtoConverter dtoConverter = new DtoConverter();
 
 	@Override
@@ -77,9 +78,33 @@ public class ServiceEmprunterImpl extends AbstractGenericService<Emprunter, Long
 			emprunterDtoEx.setId(empruntEntity.getId());
 			return emprunterDtoEx; // on retourne le DtoEx sauvegardé
 			// avec la clef primaire éventuellement autoincrémenté
-		}else
-			   
-			return null;//A améliorer
+		} else
+
+			return null;// A améliorer
+	}
+
+	public EmprunterDtoEx updateEmpruntDtoEx(EmprunterDtoEx emprunterDtoEx) {
+		Emprunter empruntEntity = GenericConverter.map(emprunterDtoEx, Emprunter.class);
+		if (emprunterDtoEx.getIdExemp() != null && emprunterDtoEx.getIdLecteur() != null) {
+			Exemplaire exemplaireEntity = daoExemplaire.findById(emprunterDtoEx.getIdExemp()).get();
+			empruntEntity.setExemplaireEmprunte(exemplaireEntity);
+			Lecteur LecteurEntity = daoLecteur.findById(emprunterDtoEx.getIdLecteur()).get();
+			empruntEntity.setEmprunteur(LecteurEntity);
+		}
+
+		empruntEntity.setType(Emprunter.TypeEmprunt.valueOf(emprunterDtoEx.getType()));
+
+		// AVANT DE CREER UN EMPRUNT, IL FAUT SE RASSURER QUE L'EXEMPLAIRE EST
+		// DISPONIBLE
+		Exemplaire exemplaireEntity = daoExemplaire.findById(emprunterDtoEx.getIdExemp()).get();
+
+		exemplaireEntity.setIsDisponibilite(false);
+		daoExemplaire.save(exemplaireEntity);
+		daoEmprunt.save(empruntEntity);
+
+		emprunterDtoEx.setId(empruntEntity.getId());
+		return emprunterDtoEx; // on retourne le DtoEx sauvegardé
+		// avec la clef primaire éventuellement autoincrémenté
 	}
 
 	@Override
@@ -88,13 +113,8 @@ public class ServiceEmprunterImpl extends AbstractGenericService<Emprunter, Long
 	}
 
 	@Override
-	public List<EmprunterDtoEx2> searchListofEmpruntByIdLecteur(Long idPers) {
-		return dtoConverter.emprunterToEmprunterDtoEx2(daoEmprunt.findByemprunteurIdPersonne(idPers));
+	public List<EmprunterDtoEx3> searchListofEmpruntByIdLecteur(Long idPers) {
+		return dtoConverter.emprunterToEmprunterDtoEx3(daoEmprunt.findByemprunteurIdPersonne(idPers));
 	}
 
-	
-
-	
-	}
-
-
+}
