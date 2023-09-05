@@ -13,4 +13,6 @@ public interface IDaoPersonne extends JpaRepository<Personne, Long> {
 
 	List<Personne> findByNomAndPrenom(String nom, String prenom);
 
+	Personne findByEmailAndPassword(String email, String password);
+
 }

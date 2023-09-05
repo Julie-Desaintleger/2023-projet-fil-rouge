@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inetum.AppBibliotheque.personnes.dto.AdministrateurDto;
 import com.inetum.AppBibliotheque.personnes.dto.LecteurDto;
+import com.inetum.AppBibliotheque.personnes.dto.LoginRequest;
+import com.inetum.AppBibliotheque.personnes.dto.LoginResponse;
 import com.inetum.AppBibliotheque.personnes.dto.PersonneDto;
 import com.inetum.AppBibliotheque.personnes.entities.Administrateur;
 import com.inetum.AppBibliotheque.personnes.entities.Lecteur;
@@ -36,6 +38,15 @@ public class PersonneRestCtrl {
 
 	@Autowired
 	private IServiceAdministrateur serviceAdministrateur;
+
+	// exemple de fin d'URL de déclenchement:
+	// ./api-personnes/personne/login
+	// appelé en mode POST avec dans la partie invisible "body" de la requete ;
+	// { "username" : "toto@mail.com", "password" : "0102"}
+	@PostMapping("/personne/login")
+	public LoginResponse postLoginRequest(@RequestBody LoginRequest loginRequest) {
+		return servicePersonne.verifLogin(loginRequest);
+	}
 
 	// exemple URL de déclenchement: ./api-personnes/personne/1
 	@GetMapping("/personne/{idPersonne}")

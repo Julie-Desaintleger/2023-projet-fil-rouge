@@ -12,6 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.inetum.AppBibliotheque.converter.DtoConverter;
 import com.inetum.AppBibliotheque.converter.GenericConverter;
 import com.inetum.AppBibliotheque.personnes.dao.interfaces.IDaoPersonne;
+import com.inetum.AppBibliotheque.personnes.dto.LoginRequest;
+import com.inetum.AppBibliotheque.personnes.dto.LoginResponse;
 import com.inetum.AppBibliotheque.personnes.dto.PersonneDto;
 import com.inetum.AppBibliotheque.personnes.entities.Personne;
 import com.inetum.AppBibliotheque.services.AbstractGenericService;
@@ -58,4 +60,24 @@ public class ServicePersonneImpl extends AbstractGenericService<Personne, Long, 
 		Personne personneToSaveOrUpdate = dtoConverter.personneDtoToPersonne(personneDto);
 		return GenericConverter.map(this.saveOrUpdate(personneToSaveOrUpdate), getDtoClass());
 	}
+
+	@Override
+	public Personne rechercherPersonneParEmailEtPassword(String email, String password) {
+		return daoPersonne.findByEmailAndPassword(email, password);
+	}
+
+	@Override
+	public LoginResponse verifLogin(LoginRequest loginRequest) {
+		LoginResponse response = new LoginResponse();
+		Personne p = rechercherPersonneParEmailEtPassword(loginRequest.getEmail(),
+					loginRequest.getPassword());
+		if (p != null) {
+			response.setEmail(loginRequest.getEmail());
+			response.setIsConnected(true);
+			response.setMsg("" + loginRequest.getEmail() + " est connecté");
+			response.setRole(p.getClass().getSimpleName());
+		}
+		return response;
+	}
+
 }

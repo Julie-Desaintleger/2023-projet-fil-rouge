@@ -24,4 +24,9 @@ public class Lecteur extends Personne {
 		super(idPersonne, prenom, nom, email, telephone, adresse);
 	}
 
+	public Lecteur(Long idPersonne, String prenom, String nom, String email, String password,
+				String telephone, String adresse) {
+		super(idPersonne, prenom, nom, email, password, telephone, adresse);
+	}
+
 }
