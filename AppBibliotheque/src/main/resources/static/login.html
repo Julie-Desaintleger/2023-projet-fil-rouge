@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login</title>
+
+<!-- Bootstrap CSS -->
+<link rel="stylesheet"
+	href="./assets/bs/css/bootstrap.min.css">
+<script src="my_ajax_util.js"></script>
+<script src="loginPage.js"></script>
+
+</head>
+<body>
+	<div class="container" style="margin-top: 15px;">
+		<form id="login-form">
+			<!-- Email input -->
+			<div class="form-outline mb-4">
+				<input type="text" id="utilisateur" class="form-control" /> <label
+					class="form-label" for="utilisateur">Email (ou username)</label>
+			</div>
+
+			<!-- Password input -->
+			<div class="form-outline mb-4">
+				<input type="password" id="mdp" class="form-control" /> <label
+					class="form-label" for="mdp">Mot de passe</label>
+			</div>
+
+
+			<!-- Submit button -->
+			<div>
+				<input type="button"
+					class="btn btn-primary btn-block mb-4" value="Se connecter" onclick="connecter()" />
+			</div>
+			
+			<div id="loginErrorMsg" ></div>
+		</form>
+	</div>
+</body>
+</html>

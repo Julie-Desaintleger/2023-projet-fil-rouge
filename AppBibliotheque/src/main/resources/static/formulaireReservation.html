@@ -24,27 +24,31 @@
         </nav>
     </header>
 	
+	<div>
+		<p>
+			<a href="exemplaireAjax.html"><button id="btn-retour" style="padding-top: 20px"><img src="icons8-retour-24.png" style="margin-right: 5px;">Retour </button></a><br/>		
+		</p>
+	</div>
 	
-	
-	<form class="form-reservation">
+	<form class="form-formulaire form-corrige">
 	<p> Les champs suivis d’un astérisque (*) sont obligatoires.</p>
-	<div class="form-group champ-reservation">
+	<div class="form-group champ">
 	<label for="idexemp">Id exemplaire </label>
 	<input type="number" id="idexemp"  class="form-control" readonly>
 	</div>
-	<div class="form-group champ-reservation">
+	<div class="form-group champ">
 	<label for="datedebut">Date de debut *</label>
 	<input type="date" id="datedebut" class="form-control" placeholder="Enter la date de début">
 	</div>
-	<div class="form-group champ-reservation">
+	<div class="form-group champ">
 	<label for="datefin">Date de fin *</label>
 	<input type="date" id="datefin" class="form-control" placeholder="Enter la date de fin">
 	</div>
-	<div class="form-group champ-reservation">
+	<div class="form-group champ">
 	<label for="idlecteur">Id du lecteur *</label>
 	<input type="number"  id="idlecteur" class="form-control" placeholder="Enter id du lecteur">
 	</div>
-	<div class="form-group champ-reservation" >
+	<div class="form-group champ" >
 	<label for="reservationType">Type de reservation *</label>
 	<select name="reservationtype" id="reservationType">
 	  <option value="">Selectionner un type de reservation</option>

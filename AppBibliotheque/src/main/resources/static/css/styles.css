@@ -113,10 +113,36 @@ footer p {
 	position: absolute;
     bottom: 0;
 }
-.form-reservation{
+.form-formulaire{
 	 overflow: hidden;
 	 padding: 32px;
 }
-.champ-reservation{
+.champ{
 	 margin-bottom: 10px;
+}
+
+.form-corrige {
+	padding-top: 0;
+}
+.btn-ajouter{
+	color: darkblue;
+    border: none;
+    background-color: transparent;
+}
+
+.btn-ajouterLivre {
+	padding-left:94%;
+	color: darkblue;
+    border: none;
+    background-color: transparent;
+}
+.btn-modifier{
+	color: darkblue;
+    border: none;
+    background-color: transparent;
+}
+.btn-supprimer{
+	color: red;
+    border: none;
+    background-color: transparent;
 }

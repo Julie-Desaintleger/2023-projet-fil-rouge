@@ -5,20 +5,40 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">	
+<link rel="stylesheet" href="css/styles.css">	
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="livreAjax.js"></script>
 <script src="my_ajax_util.js"></script>
 </head>
 <body>
-	<form>
-	<div class="form-group">
-	<label for="idexemp">Id exemplaire :</label>
+	<header>
+        <div class="logo">
+            <img src="icons8-livres-64.png" >
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Accueil</a></li>
+                <li><a href="#">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+	<div>
+		<p>
+			<a href="livreAjaxAdmin.html"><button id="btn-retour" style="padding-top: 20px"><img src="icons8-retour-24.png" style="margin-right: 5px;">Retour </button></a><br/>		
+		</p>
+	</div>
+	
+	<form class="form-formulaire form-corrige">
+	<div class="form-group champ">
+	<label for="idexemp">Id exemplaire </label>
 	<input type="number" id="idexemp" class="form-control">
 	</div>
 	</br>
 	
-	<div class="form-group">
-	<label for="etat">Etat :</label>
+	<div class="form-group champ">
+	<label for="etat">Etat </label>
 	<select name="etat" id="etat">
 	  <option value="BON_ETAT">BON_ETAT</option>
 	  <option value="ABIME">ABIME</option>
@@ -26,21 +46,21 @@
 	</select>	
 	</div>
 	</br>
-	<div class="form-group">
-	<label for="disponibilite">Disponibilté  :</label>
+	<div class="form-group champ">
+	<label for="disponibilite">Disponibilté  </label>
 	<select name="disponibilite" id="disponibilite">
 	  <option value="true">Disponible</option>
 	  <option value="false">Indisponible</option>
 	</select>	
 	</div>
 	</br>
-	<div class="form-group">
-	<label for="label">Label :</label>
+	<div class="form-group champ">
+	<label for="label">Label </label>
 	<input type="text" id="label" class="form-control" placeholder="Enter le label de l'exemplaire" >
 	</div>
 	</br>
-	<div class="form-group">
-	<label for="idlivre">Id livre :</label>
+	<div class="form-group champ">
+	<label for="idlivre">Id livre </label>
 	<input type="number" id="idlivre"  class="form-control">
 	</div>
 	</br>
@@ -142,6 +162,17 @@
         });
     });
     </script>
+    
+      <footer class="footer-page">
+		<div class="footer-text">
+			 <p>Horaires d'ouverture : Lundi au Vendredi, 9h00 - 18h00</p>
+       		 <p>&copy; 2023 Ma Bibliothèque. Tous droits réservés.</p>
+		</div>
+        <div  class="footer-text">
+			<span><img src="icons8-courrier-50.png" style="width: 23px;" > info@ma-bibliotheque.com</span><br/>
+			<span><img src="icons8-téléphone-30.png" style="width: 23px;" > 09 70 60 17 00 </span>
+		</div>
+    </footer>
 </body>
 </html>
 

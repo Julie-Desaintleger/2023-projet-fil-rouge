@@ -15,19 +15,23 @@ import lombok.Setter;
 public class Administrateur extends Personne {
 
 	private String username;
-	private String password;
 
 	public Administrateur(Long idPersonne, String prenom, String nom, String email, String telephone,
-				String adresse, String username, String password) {
+				String adresse, String username) {
 		super(idPersonne, prenom, nom, email, telephone, adresse);
 		this.username = username;
-		this.password = password;
+	}
+
+	public Administrateur(Long idPersonne, String prenom, String nom, String email, String password,
+				String telephone, String adresse, String username) {
+		super(idPersonne, prenom, nom, email, password, telephone, adresse);
+		this.username = username;
 	}
 
 	@Override
 	public String toString() {
-		return "Administrateur [username=" + username + ", password=" + password
-					+ ", heritant de Personne=" + super.toString() + "]";
+		return "Administrateur [username=" + username + ", heritant de Personne=" + super.toString()
+					+ "]";
 	}
 
 }

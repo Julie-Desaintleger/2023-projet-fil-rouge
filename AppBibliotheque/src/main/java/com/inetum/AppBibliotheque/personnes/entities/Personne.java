@@ -26,13 +26,15 @@ public class Personne {
 	private String prenom;
 	private String nom;
 	private String email;
+	private String password;
 	private String telephone;
 	private String adresse;
 
 	@Override
 	public String toString() {
 		return "Personne [idPersonne=" + idPersonne + ", prenom=" + prenom + ", nom=" + nom + ", email="
-					+ email + ", telephone=" + telephone + ", adresse=" + adresse + "]";
+					+ email + ", mot de passe=" + password + ", telephone=" + telephone + ", adresse="
+					+ adresse + "]";
 	}
 
 	public Personne(Long idPersonne, String prenom, String nom, String email, String telephone,
@@ -44,6 +46,12 @@ public class Personne {
 		this.email = email;
 		this.telephone = telephone;
 		this.adresse = adresse;
+	}
+
+	public Personne(Long idPersonne, String prenom, String nom, String email, String password,
+				String telephone, String adresse) {
+		this(idPersonne, prenom, nom, email, telephone, adresse);
+		this.password = password;
 	}
 
 }
