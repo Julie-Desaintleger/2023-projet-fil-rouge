@@ -26,7 +26,7 @@
 	
 	<div>
 		<p>
-			<a href="exemplaireAjax.html"><button id="btn-retour" style="padding-top: 20px"><img src="icons8-retour-24.png" style="margin-right: 5px;">Retour </button></a><br/>		
+			<a href="MesReservations.html"><button id="btn-retour" style="padding-top: 20px"><img src="icons8-retour-24.png" style="margin-right: 5px;">Retour </button></a><br/>		
 		</p>
 	</div>
 	
@@ -38,22 +38,22 @@
 	</div>
 	<div class="form-group champ">
 	<label for="datedebut">Date de debut *</label>
-	<input type="date" id="datedebut" class="form-control" placeholder="Enter la date de début">
+	<input type="date" id="datedebut" class="form-control" placeholder="Enter la date de début" readonly>
 	</div>
 	<div class="form-group champ">
 	<label for="datefin">Date de fin *</label>
-	<input type="date" id="datefin" class="form-control" placeholder="Enter la date de fin">
+	<input type="date" id="datefin" class="form-control" placeholder="Enter la date de fin" >
 	</div>
 	<div class="form-group champ">
 	<label for="idlecteur">Id du lecteur *</label>
-	<input type="number"  id="idlecteur" class="form-control" placeholder="Enter id du lecteur">
+	<input type="number"  id="idlecteur" class="form-control" placeholder="Enter id du lecteur" readonly>
 	</div>
-	<div class="form-group champ" >
+	<div class="form-group champ"  >
 	<label for="reservationType">Type de reservation *</label>
-	<select name="reservationtype" id="reservationType">
-	  <option value="">Selectionner un type de reservation</option>
-	  <option value="EFFECTIF">EFFECTIF</option>
-	  <option value="RESERVE">RESERVE</option>
+	<select name="reservationtype" id="reservationType" >
+	  <option value=""disabled selected>Selectionner un type de reservation</option>
+	  <option value="EFFECTIF"disabled selected>EFFECTIF</option>
+	  <option value="RESERVE"disabled selected>RESERVE</option>
 	</select>	
 	</div>
 	<button type="submit" id="valider-btn" class="btn btn-primary">Valider</button>
@@ -74,28 +74,42 @@
         }
 
         // Get idExemp parameter from URL
-        var idExemp = getParameterByName('id');
+        var idExemp = getParameterByName('id1');
         if (idExemp !== null) {
             document.getElementById("idexemp").value = idExemp;
         }
         console.log(idExemp);
+        // Get dateDebut parameter from URL
+        var dateDebut = getParameterByName('d1');
+            document.getElementById("datedebut").value = dateDebut;
+         console.log(dateDebut);
         
-                // Get isDisponibilite parameter from URL
-        var isDisponibilite = getParameterByName('disponibilite');
-        console.log(isDisponibilite);
-        
-       	if (isDisponibilite == "succes") {
-	
-			function reserver() {
-			
-				const id = null;
-				var idExemp = parseInt(document.getElementById("idexemp").value);
+        // Get dateFin parameter from URL
+        var dateFin = getParameterByName('d2');
+            document.getElementById("datefin").value = dateFin;
+         console.log(dateFin);
+
+        // Get idlecteur parameter from URL
+        var idlecteur = getParameterByName('idL');
+        if (idlecteur !== null) {
+            document.getElementById("idlecteur").value = idlecteur;
+        }
+        // Get type parameter from URL
+        var type = getParameterByName('type');
+            document.getElementById("reservationType").value = type;
+         console.log(type);
+        // Get idEmprunt parameter from URL
+        var idEmprunt = getParameterByName('id');
+		 console.log(idEmprunt);	
+			function prolonger() {
+			    var id =  getParameterByName('id');				
 				var datedebut = document.getElementById("datedebut").value;
 				var datefin = document.getElementById("datefin").value;
-				var idlecteur = parseInt(document.getElementById("idlecteur").value);
 				var reservationType = document.getElementById("reservationType").value;
+				var idExemp = parseInt(document.getElementById("idexemp").value);
+				var idlecteur = parseInt(document.getElementById("idlecteur").value);
+				
 						
-				console.log("////////////////////" + isDisponibilite);
 	
 				var formData = JSON.stringify({
 						"id": id,
@@ -105,10 +119,8 @@
 						"idExemp": idExemp,
 						"idLecteur": idlecteur,
 					});
-				console.log("////////////////////" + differenceEntreDeuxDates(datedebut, datefin));
 				console.log(formData);
-				if( differenceEntreDeuxDates(datedebut, datefin)>=1 && differenceEntreDeuxDates(datedebut, datefin)<=30){
-
+			if( differenceEntreDeuxDates(datedebut, datefin)<=15){
 				var xmlhttp = new XMLHttpRequest();
 				xmlhttp.withCredentials = true;
 				xmlhttp.addEventListener("readystatechange", function() {
@@ -116,29 +128,24 @@
 						console.log(this.responseText);
 					}
 				});
-				xmlhttp.open("POST", "http://localhost:8080/AppBibliotheque/api-emprunts/emprunt");
+				xmlhttp.open("PUT", "http://localhost:8080/AppBibliotheque/api-emprunts/emprunt/" + id);
 				xmlhttp.setRequestHeader("Content-Type", "application/json");
 				xmlhttp.send(formData);
-				
-				alert("Exemplaire est reservé avec succes. A rendre le : " + datefin );
+				alert("Emprunt est prolongé avec succes jusqu'au : " + datefin );
 				setTimeout(function(){ window.location = 'exemplaireAjax.html'; }, 0000);
 				}
 				else {
-					alert("Veuillez choisir une date de fin anterieure à la date de début et/ou une durée d'emprunt de moins de 30 jours !" );
+					alert("Veuillez ne pas dépasser 15 jours de prolongation !" );
 				} 
-				}
-		}
-		if(isDisponibilite == "echec") {
-		alert("Exemplaire choisi n'est pas disponible!  Veuillez vérifier la disponibilité de l'exemplaire");
-		setTimeout(function(){ window.location = 'exemplaireAjax.html'; }, 0000);
-		}
+			}
+
 
        // liaison du boutton valider à la fonction reserver
         document.addEventListener("DOMContentLoaded", function() {
         var validerButton = document.getElementById("valider-btn");
         validerButton.addEventListener("click", function(event) {
             event.preventDefault(); 
-            reserver(); 
+            prolonger(); 
         });
     });
     </script>

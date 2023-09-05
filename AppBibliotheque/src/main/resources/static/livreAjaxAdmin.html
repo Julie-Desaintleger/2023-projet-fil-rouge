@@ -29,9 +29,9 @@
         </div>
         <nav>
             <ul>
-                <li><a href="index.html">Accueil</a></li>
                 <li><a href="exemplaireAjaxAdmin.html">Consulter les exemplaires</a></li>
                 <li><a href="#">À propos</a></li>
+                <li><a href="index.html">Deconnexion</a></li>
             </ul>
         </nav>
     </header>
@@ -48,7 +48,7 @@
 	<div>
 		
 		<p>
-			<a href="formulaireAddLivre.html"><button class="btn-ajouterLivre">Ajouter livre</button></a><br/>	
+			<a href="formulaireAddLivre.html"><button class="btn-ajouterLivre">Ajouter livre <img src="icons8-ajouter-48.png" ></button></a><br/>	
 		</p>
 	</div>
 	<div style=" height: 100vh;">
@@ -109,6 +109,7 @@ function RechercherLivre() {
 			 } 
  		else {
 			alert("Livre non existant ");
+			setTimeout(function(){ window.location = 'livreAjaxAdmin.html'; }, 0000);
 	}
 			 
 			 

@@ -131,7 +131,9 @@ footer p {
 }
 
 .btn-ajouterLivre {
-	padding-left:94%;
+	align-items: center;
+	display: flex;
+	padding-left:92%;
 	color: darkblue;
     border: none;
     background-color: transparent;
@@ -145,4 +147,24 @@ footer p {
 	color: red;
     border: none;
     background-color: transparent;
+}
+.btn-prolonger{
+	color: darkblue;
+    border: none;
+    background-color: transparent;
+}
+
+
+.bg-image-vertical {
+position: relative;
+overflow: hidden;
+background-repeat: no-repeat;
+background-position: right center;
+background-size: auto 100%;
+}
+
+@media (min-width: 1025px) {
+.h-custom-2 {
+height: 100%;
+}
 }
